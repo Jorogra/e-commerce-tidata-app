@@ -237,7 +237,7 @@ export function AdminPanel() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg">Order #{order.id}</CardTitle>
+                    <CardTitle className="text-lg">{order.orderNumber}</CardTitle>
                     <p className="text-sm text-muted-foreground mt-1">
                       {order.customerName} • {order.customerEmail}
                     </p>

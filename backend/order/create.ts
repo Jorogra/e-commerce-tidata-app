@@ -14,6 +14,7 @@ export interface CreateOrderRequest {
 
 export interface Order {
   id: number;
+  orderNumber: string;
   customerName: string;
   customerEmail: string;
   total: number;
@@ -76,10 +77,12 @@ export const create = api<CreateOrderRequest, Order>(
         });
       }
 
-      const order = await tx.queryRow<{ id: number; created_at: Date }>`
-        INSERT INTO orders (customer_name, customer_email, total)
-        VALUES (${req.customerName}, ${req.customerEmail}, ${total})
-        RETURNING id, created_at
+      const orderNumber = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      
+      const order = await tx.queryRow<{ id: number; order_number: string; created_at: Date }>`
+        INSERT INTO orders (customer_name, customer_email, total, order_number)
+        VALUES (${req.customerName}, ${req.customerEmail}, ${total}, ${orderNumber})
+        RETURNING id, order_number, created_at
       `;
 
       const items: OrderItemResponse[] = [];
@@ -100,6 +103,7 @@ export const create = api<CreateOrderRequest, Order>(
 
       return {
         id: order!.id,
+        orderNumber: order!.order_number,
         customerName: req.customerName,
         customerEmail: req.customerEmail,
         total,

@@ -3,13 +3,14 @@ import { ProductList } from "./ProductList";
 import { Cart } from "./Cart";
 import { Checkout } from "./Checkout";
 import { AdminPanel } from "./AdminPanel";
-import { ShoppingCart, Package, LayoutDashboard } from "lucide-react";
+import { OrderSearch } from "./OrderSearch";
+import { ShoppingCart, Package, LayoutDashboard, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCart } from "../lib/cart-context";
 
 export function AppInner() {
-  const [activeTab, setActiveTab] = useState<"shop" | "admin">("shop");
+  const [activeTab, setActiveTab] = useState<"shop" | "admin" | "track">("shop");
   const [showCheckout, setShowCheckout] = useState(false);
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -23,11 +24,15 @@ export function AppInner() {
               <Package className="h-6 w-6" />
               <h1 className="text-2xl font-bold">Store</h1>
             </div>
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "shop" | "admin")}>
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "shop" | "admin" | "track")}>
               <TabsList>
                 <TabsTrigger value="shop" className="gap-2">
                   <ShoppingCart className="h-4 w-4" />
                   Shop
+                </TabsTrigger>
+                <TabsTrigger value="track" className="gap-2">
+                  <Search className="h-4 w-4" />
+                  Track Order
                 </TabsTrigger>
                 <TabsTrigger value="admin" className="gap-2">
                   <LayoutDashboard className="h-4 w-4" />
@@ -64,6 +69,10 @@ export function AppInner() {
               </div>
             </div>
           )
+        ) : activeTab === "track" ? (
+          <div className="max-w-3xl mx-auto">
+            <OrderSearch />
+          </div>
         ) : (
           <AdminPanel />
         )}

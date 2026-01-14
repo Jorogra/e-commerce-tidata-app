@@ -3,6 +3,7 @@ import db from "../db";
 
 export interface OrderSummary {
   id: number;
+  orderNumber: string;
   customerName: string;
   customerEmail: string;
   total: number;
@@ -18,7 +19,7 @@ export const list = api<void, ListOrdersResponse>(
   { expose: true, method: "GET", path: "/orders" },
   async () => {
     const orders = await db.queryAll<OrderSummary>`
-      SELECT id, customer_name AS "customerName", customer_email AS "customerEmail", total, created_at AS "createdAt"
+      SELECT id, order_number AS "orderNumber", customer_name AS "customerName", customer_email AS "customerEmail", total, created_at AS "createdAt"
       FROM orders
       ORDER BY created_at DESC
     `;

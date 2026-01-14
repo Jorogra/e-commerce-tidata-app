@@ -2,14 +2,13 @@ import { api, APIError } from "encore.dev/api";
 import db from "../db";
 import type { Order, OrderItemResponse } from "./create";
 
-export interface GetOrderParams {
-  id: number;
+export interface SearchOrderParams {
+  orderNumber: string;
 }
 
-// Retrieves an order by ID with all items.
-export const get = api<GetOrderParams, Order>(
-  { expose: true, method: "GET", path: "/orders/:id" },
-  async ({ id }) => {
+export const search = api<SearchOrderParams, Order>(
+  { expose: true, method: "GET", path: "/orders/search/:orderNumber" },
+  async ({ orderNumber }) => {
     const order = await db.queryRow<{
       id: number;
       order_number: string;
@@ -20,7 +19,7 @@ export const get = api<GetOrderParams, Order>(
     }>`
       SELECT id, order_number, customer_name, customer_email, total, created_at
       FROM orders
-      WHERE id = ${id}
+      WHERE order_number = ${orderNumber}
     `;
 
     if (!order) {
@@ -36,7 +35,7 @@ export const get = api<GetOrderParams, Order>(
         oi.price_at_purchase AS "priceAtPurchase"
       FROM order_items oi
       JOIN products p ON p.id = oi.product_id
-      WHERE oi.order_id = ${id}
+      WHERE oi.order_id = ${order.id}
     `;
 
     return {

@@ -20,6 +20,7 @@ export function Checkout({ onComplete }: CheckoutProps) {
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
 
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
@@ -34,12 +35,13 @@ export function Checkout({ onComplete }: CheckoutProps) {
         })),
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       setOrderPlaced(true);
+      setOrderNumber(data.orderNumber);
       clearCart();
       toast({
         title: "Order placed!",
-        description: "Your order has been successfully placed.",
+        description: `Order ${data.orderNumber} has been successfully placed.`,
       });
     },
     onError: (error) => {
@@ -65,8 +67,10 @@ export function Checkout({ onComplete }: CheckoutProps) {
             <CheckCircle2 className="h-10 w-10 text-green-600" />
           </div>
           <CardTitle className="text-2xl">Order Confirmed!</CardTitle>
-          <CardDescription>
-            Thank you for your purchase. A confirmation has been sent to {customerEmail}
+          <CardDescription className="space-y-2">
+            <p className="text-lg font-semibold text-foreground mt-2">Order Number: {orderNumber}</p>
+            <p>Thank you for your purchase. A confirmation has been sent to {customerEmail}</p>
+            <p className="text-xs text-muted-foreground">Save this order number for tracking your order.</p>
           </CardDescription>
         </CardHeader>
         <CardFooter className="justify-center">
