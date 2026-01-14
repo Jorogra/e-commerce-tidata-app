@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import backend from "~backend/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,11 @@ export function OrderSearch() {
   const { toast } = useToast();
   const [orderNumber, setOrderNumber] = useState("");
   const [order, setOrder] = useState<Order | null>(null);
+
+  const { data: ordersData, isLoading: isLoadingOrders } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () => backend.order.list(),
+  });
 
   const { mutate: searchOrder, isPending } = useMutation({
     mutationFn: async (orderNum: string) => {
@@ -128,6 +133,38 @@ export function OrderSearch() {
           </CardContent>
         </Card>
       )}
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4">All Orders</h2>
+        {isLoadingOrders ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : (
+          <div className="grid gap-4">
+            {ordersData?.orders.map((orderItem) => (
+              <Card key={orderItem.id}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-lg">{orderItem.orderNumber}</CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {orderItem.customerName} • {orderItem.customerEmail}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-lg">${orderItem.total.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(orderItem.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -33,11 +33,23 @@ export function ProductList() {
     );
   }
 
+  const sortedProducts = data.products.slice().sort((a, b) => {
+    if (a.stockQuantity === 0 && b.stockQuantity > 0) return 1;
+    if (a.stockQuantity > 0 && b.stockQuantity === 0) return -1;
+    
+    if (a.stockQuantity > 0 && b.stockQuantity > 0) {
+      if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
+      if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
+    }
+    
+    return 0;
+  });
+
   return (
     <div>
       <h2 className="text-3xl font-bold mb-6">Products</h2>
       <div className="grid sm:grid-cols-2 gap-6">
-        {data.products.map((product) => (
+        {sortedProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

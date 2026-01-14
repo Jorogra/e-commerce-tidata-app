@@ -175,7 +175,14 @@ export function AdminPanel() {
         </div>
 
         <div className="grid gap-4">
-          {productsData?.products.map((product) => (
+          {productsData?.products
+            .slice()
+            .sort((a, b) => {
+              if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
+              if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
+              return a.stockQuantity - b.stockQuantity;
+            })
+            .map((product) => (
             <Card key={product.id}>
               <CardContent className="p-4">
                 <div className="flex items-center gap-4">
@@ -197,7 +204,7 @@ export function AdminPanel() {
                     </p>
                     <div className="flex items-center gap-4 mt-1">
                       <span className="font-bold">${product.price.toFixed(2)}</span>
-                      <span className="text-sm text-muted-foreground">
+                      <span className={`text-sm font-semibold ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
                         Stock: {product.stockQuantity}
                       </span>
                     </div>
