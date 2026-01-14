@@ -1,0 +1,1 @@
+{"id": "e-commerce-platform-ggci", "lang": "typescript"}
