@@ -45,6 +45,11 @@ export function OrderSearch() {
     }
   };
 
+  const handleOrderClick = (orderNum: string) => {
+    setOrderNumber(orderNum);
+    searchOrder(orderNum);
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -143,7 +148,11 @@ export function OrderSearch() {
         ) : (
           <div className="grid gap-4">
             {ordersData?.orders.map((orderItem) => (
-              <Card key={orderItem.id}>
+              <Card 
+                key={orderItem.id} 
+                className="cursor-pointer transition-all hover:shadow-md hover:border-primary"
+                onClick={() => handleOrderClick(orderItem.orderNumber)}
+              >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
