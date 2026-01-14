@@ -60,9 +60,11 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold">${product.price.toFixed(2)}</span>
-          <Badge variant="outline">
-            {product.stockQuantity} in stock
-          </Badge>
+          {product.stockQuantity > 0 && product.stockQuantity <= 5 && (
+            <span className="text-sm font-semibold text-red-600">
+              {product.stockQuantity === 1 ? "Only 1 left!!" : `Only ${product.stockQuantity} in stock`}
+            </span>
+          )}
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
