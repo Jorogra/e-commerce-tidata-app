@@ -47,8 +47,8 @@ export function ProductList() {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold mb-6">Products</h2>
-      <div className="grid sm:grid-cols-2 gap-6">
+      <h2 className="text-2xl font-bold mb-6">Products</h2>
+      <div className="space-y-4">
         {sortedProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

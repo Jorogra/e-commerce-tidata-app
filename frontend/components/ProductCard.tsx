@@ -32,8 +32,8 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-lg">
-      <div className="aspect-square bg-muted relative">
+    <Card className="overflow-hidden transition-all active:scale-[0.98]">
+      <div className="aspect-[4/3] bg-muted relative">
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
@@ -42,41 +42,39 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Package className="h-16 w-16 text-muted-foreground" />
+            <Package className="h-20 w-20 text-muted-foreground" />
           </div>
         )}
         {product.stockQuantity === 0 && (
           <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
-            <Badge variant="destructive" className="text-lg">Out of Stock</Badge>
+            <Badge variant="destructive" className="text-base px-4 py-2">Out of Stock</Badge>
           </div>
         )}
       </div>
-      <CardContent className="p-4">
-        <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+      <CardContent className="p-5">
+        <h3 className="font-semibold text-xl mb-2">{product.name}</h3>
         {product.description && (
-          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
             {product.description}
           </p>
         )}
-        <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold">${product.price.toFixed(2)}</span>
-          {product.stockQuantity > 0 && product.stockQuantity <= 5 && (
-            <span className="text-sm font-semibold text-red-600">
-              {product.stockQuantity === 1 ? "Only 1 left!!" : `Only ${product.stockQuantity} in stock`}
-            </span>
-          )}
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-3xl font-bold">${product.price.toFixed(2)}</span>
         </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-0">
+        {product.stockQuantity > 0 && product.stockQuantity <= 5 && (
+          <p className="text-sm font-semibold text-red-600 mb-3">
+            {product.stockQuantity === 1 ? "Only 1 left!" : `Only ${product.stockQuantity} in stock`}
+          </p>
+        )}
         <Button
-          className="w-full"
+          className="w-full h-12 text-base"
           onClick={handleAddToCart}
           disabled={product.stockQuantity === 0}
         >
-          <ShoppingCart className="h-4 w-4 mr-2" />
+          <ShoppingCart className="h-5 w-5 mr-2" />
           Add to Cart
         </Button>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 }
