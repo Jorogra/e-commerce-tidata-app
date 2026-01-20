@@ -19,28 +19,26 @@ export function AppInner() {
     <div className="min-h-screen bg-background">
       <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Package className="h-6 w-6" />
-              <h1 className="text-2xl font-bold">Store</h1>
-            </div>
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "shop" | "admin" | "track")}>
-              <TabsList>
-                <TabsTrigger value="shop" className="gap-2">
-                  <ShoppingCart className="h-4 w-4" />
-                  Shop
-                </TabsTrigger>
-                <TabsTrigger value="track" className="gap-2">
-                  <Search className="h-4 w-4" />
-                  Track Order
-                </TabsTrigger>
-                <TabsTrigger value="admin" className="gap-2">
-                  <LayoutDashboard className="h-4 w-4" />
-                  Admin
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+          <div className="flex items-center gap-2 mb-4">
+            <Package className="h-6 w-6" />
+            <h1 className="text-2xl font-bold">Store</h1>
           </div>
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "shop" | "admin" | "track")}>
+            <TabsList>
+              <TabsTrigger value="shop" className="gap-2">
+                <ShoppingCart className="h-4 w-4" />
+                Shop
+              </TabsTrigger>
+              <TabsTrigger value="track" className="gap-2">
+                <Search className="h-4 w-4" />
+                Track Order
+              </TabsTrigger>
+              <TabsTrigger value="admin" className="gap-2">
+                <LayoutDashboard className="h-4 w-4" />
+                Admin
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
       </header>
 
