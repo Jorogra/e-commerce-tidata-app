@@ -62,8 +62,12 @@ export function ProductCard({ product }: ProductCardProps) {
           <span className="text-3xl font-bold">${product.price.toFixed(2)}</span>
         </div>
         {product.stockQuantity > 0 && product.stockQuantity <= 5 && (
-          <p className="text-sm font-semibold text-red-600 mb-3">
-            {product.stockQuantity === 1 ? "Only 1 left!" : `Only ${product.stockQuantity} in stock`}
+          <p className={`text-sm mb-3 ${
+            product.stockQuantity === 1 
+              ? "font-bold text-red-600" 
+              : "font-semibold text-red-600"
+          }`}>
+            {product.stockQuantity === 1 ? "Last one in stock!" : `Only ${product.stockQuantity} in stock`}
           </p>
         )}
         <Button

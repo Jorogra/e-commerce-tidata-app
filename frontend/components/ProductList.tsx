@@ -40,6 +40,10 @@ export function ProductList() {
     if (a.stockQuantity > 0 && b.stockQuantity > 0) {
       if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
       if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
+      
+      if (a.stockQuantity <= 5 && b.stockQuantity <= 5) {
+        return a.stockQuantity - b.stockQuantity;
+      }
     }
     
     return 0;
