@@ -1,7 +1,7 @@
 {
-  "name": "E-Commerce Store",
-  "short_name": "Store",
-  "description": "Modern e-commerce platform for shopping and order management",
+  "name": "Minha Loja Digital",
+  "short_name": "MinhaLoja",
+  "description": "Plataforma moderna para compras e gestão de pedidos",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -24,16 +24,16 @@
   "categories": ["shopping", "business"],
   "shortcuts": [
     {
-      "name": "Shop",
-      "short_name": "Shop",
-      "description": "Browse products",
+      "name": "Comprar",
+      "short_name": "Loja",
+      "description": "Ver todos os produtos",
       "url": "/?tab=shop",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Track Order",
-      "short_name": "Track",
-      "description": "Track your order",
+      "name": "Rastrear Pedido",
+      "short_name": "Rastrear",
+      "description": "Acompanhe seu pedido",
       "url": "/?tab=track",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }

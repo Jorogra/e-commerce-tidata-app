@@ -19,12 +19,12 @@ export function Cart({ onCheckout }: CartProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ShoppingCart className="h-5 w-5" />
-            Cart
+            Carrinho
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-center py-8">
-            Your cart is empty
+            Seu carrinho está vazio
           </p>
         </CardContent>
       </Card>
@@ -36,7 +36,7 @@ export function Cart({ onCheckout }: CartProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShoppingCart className="h-5 w-5" />
-          Cart ({items.length})
+          Carrinho ({items.length})
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -46,7 +46,7 @@ export function Cart({ onCheckout }: CartProps) {
               <div className="flex-1 min-w-0">
                 <p className="font-medium truncate">{item.product.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  ${item.product.price.toFixed(2)} each
+                  R$ {item.product.price.toFixed(2)} cada
                 </p>
               </div>
               <Button
@@ -77,7 +77,7 @@ export function Cart({ onCheckout }: CartProps) {
                 <Plus className="h-4 w-4" />
               </Button>
               <span className="ml-auto font-semibold">
-                ${(item.product.price * item.quantity).toFixed(2)}
+                R$ {(item.product.price * item.quantity).toFixed(2)}
               </span>
             </div>
             <Separator />
@@ -87,10 +87,10 @@ export function Cart({ onCheckout }: CartProps) {
       <CardFooter className="flex-col gap-4">
         <div className="flex items-center justify-between w-full text-lg font-bold">
           <span>Total</span>
-          <span>${total.toFixed(2)}</span>
+          <span>R$ {total.toFixed(2)}</span>
         </div>
         <Button className="w-full" size="lg" onClick={onCheckout}>
-          Proceed to Checkout
+          Finalizar compra
         </Button>
       </CardFooter>
     </Card>

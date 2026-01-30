@@ -27,19 +27,20 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-4 border-b">
+          {/* TOPO: Safe Area para o Notch */}
+          <div className="flex items-center justify-between p-4 border-b pt-[env(safe-area-inset-top)]">
             <h2 className="text-xl font-bold">
-              Cart {items.length > 0 && `(${items.length})`}
+              Carrinho {items.length > 0 && `(${items.length})`}
             </h2>
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-6 w-6" />
             </Button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-4 pb-10">
             {items.length === 0 ? (
               <p className="text-muted-foreground text-center py-12">
-                Your cart is empty
+                Seu carrinho está vazio
               </p>
             ) : (
               <div className="space-y-4">
@@ -49,7 +50,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                       <div className="flex-1 min-w-0">
                         <p className="font-medium">{item.product.name}</p>
                         <p className="text-sm text-muted-foreground">
-                          ${item.product.price.toFixed(2)} each
+                          R$ {item.product.price.toFixed(2)} cada
                         </p>
                       </div>
                       <Button
@@ -84,7 +85,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                         <Plus className="h-5 w-5" />
                       </Button>
                       <span className="ml-auto font-semibold text-lg">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        R$ {(item.product.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
                     <Separator />
@@ -95,10 +96,11 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
           </div>
 
           {items.length > 0 && (
-            <div className="border-t p-4 space-y-4 safe-area-inset-bottom">
+            /* RODAPÉ: Safe Area para a barra de gestos */
+            <div className="border-t p-4 space-y-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
               <div className="flex items-center justify-between text-xl font-bold">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>R$ {total.toFixed(2)}</span>
               </div>
               <Button
                 className="w-full h-14 text-lg"
@@ -107,7 +109,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                   onClose();
                 }}
               >
-                Proceed to Checkout
+                Ir para pagamento
               </Button>
             </div>
           )}

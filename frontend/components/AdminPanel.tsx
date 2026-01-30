@@ -32,11 +32,11 @@ export function AdminPanel() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       setIsDialogOpen(false);
-      toast({ title: "Product created successfully" });
+      toast({ title: "Produto criado com successo", duration: 3000});
     },
     onError: (error) => {
-      console.error("Failed to create product:", error);
-      toast({ title: "Failed to create product", variant: "destructive" });
+      console.error("Falha em criar produto:", error);
+      toast({ title: "Falha em criar produto", variant: "destructive", duration: 3000});
     },
   });
 
@@ -46,11 +46,11 @@ export function AdminPanel() {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       setIsDialogOpen(false);
       setEditingProduct(null);
-      toast({ title: "Product updated successfully" });
+      toast({ title: "Produto atualizado com successo", duration: 3000});
     },
     onError: (error) => {
-      console.error("Failed to update product:", error);
-      toast({ title: "Failed to update product", variant: "destructive" });
+      console.error("Falha em atualizar produto:", error);
+      toast({ title: "Falha em atualizar produto", variant: "destructive" , duration: 3000});
     },
   });
 
@@ -58,11 +58,11 @@ export function AdminPanel() {
     mutationFn: (id: number) => backend.product.remove({ id }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      toast({ title: "Product deleted successfully" });
+      toast({ title: "Product deleted successfully", duration: 3000});
     },
     onError: (error) => {
-      console.error("Failed to delete product:", error);
-      toast({ title: "Failed to delete product", variant: "destructive" });
+      console.error("Falha em deletar produto:", error);
+      toast({ title: "Falha em deletar produto", variant: "destructive", duration: 3000});
     },
   });
 
@@ -96,7 +96,7 @@ export function AdminPanel() {
     <div className="space-y-8">
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-bold">Products</h2>
+          <h2 className="text-3xl font-bold">Produtos</h2>
           <Dialog open={isDialogOpen} onOpenChange={(open) => {
             setIsDialogOpen(open);
             if (!open) setEditingProduct(null);
@@ -104,16 +104,16 @@ export function AdminPanel() {
             <DialogTrigger asChild>
               <Button>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Product
+                Adc Produto
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-md">
               <DialogHeader>
-                <DialogTitle>{editingProduct ? "Edit Product" : "Add Product"}</DialogTitle>
+                <DialogTitle>{editingProduct ? "Editar Produto" : "Adc Produto"}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
+                  <Label htmlFor="name">Nome</Label>
                   <Input
                     id="name"
                     name="name"
@@ -122,7 +122,7 @@ export function AdminPanel() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">Descrição</Label>
                   <Textarea
                     id="description"
                     name="description"
@@ -131,7 +131,7 @@ export function AdminPanel() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price</Label>
+                  <Label htmlFor="price">Preço</Label>
                   <Input
                     id="price"
                     name="price"
@@ -143,7 +143,7 @@ export function AdminPanel() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="stockQuantity">Stock Quantity</Label>
+                  <Label htmlFor="stockQuantity">Qtd estoque</Label>
                   <Input
                     id="stockQuantity"
                     name="stockQuantity"
@@ -154,7 +154,7 @@ export function AdminPanel() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="imageUrl">Image URL</Label>
+                  <Label htmlFor="imageUrl">URL da Imagem</Label>
                   <Input
                     id="imageUrl"
                     name="imageUrl"
@@ -167,100 +167,112 @@ export function AdminPanel() {
                   {(createMutation.isPending || updateMutation.isPending) && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {editingProduct ? "Update" : "Create"}
+                  {editingProduct ? "Atualizar" : "Criar"}
                 </Button>
               </form>
             </DialogContent>
           </Dialog>
         </div>
 
-        <div className="grid gap-4">
-          {productsData?.products
-            .slice()
-            .sort((a, b) => {
-              if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
-              if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
-              return a.stockQuantity - b.stockQuantity;
-            })
-            .map((product) => (
-            <Card key={product.id}>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded bg-muted flex items-center justify-center shrink-0">
-                    {product.imageUrl ? (
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="w-full h-full object-cover rounded"
-                      />
-                    ) : (
-                      <Package className="h-8 w-8 text-muted-foreground" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold truncate">{product.name}</h3>
-                    <p className="text-sm text-muted-foreground truncate">
-                      {product.description || "No description"}
-                    </p>
-                    <div className="flex items-center gap-4 mt-1">
-                      <span className="font-bold">${product.price.toFixed(2)}</span>
-                      <span className={`text-sm font-semibold ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
-                        Stock: {product.stockQuantity}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => {
-                        setEditingProduct(product);
-                        setIsDialogOpen(true);
-                      }}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => deleteMutation.mutate(product.id)}
-                      disabled={deleteMutation.isPending}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="grid gap-4 w-full"> {/* Garante que o grid use 100% da largura */}
+  {productsData?.products
+    .slice()
+    .sort((a, b) => {
+      if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
+      if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
+      return a.stockQuantity - b.stockQuantity;
+    })
+    .map((product) => (
+    <Card key={product.id} className="overflow-hidden"> {/* Impede vazamento lateral do card */}
+      <CardContent className="p-4">
+        <div className="flex items-center gap-3"> {/* Reduzi o gap para mobile */}
+          <div className="w-14 h-14 rounded bg-muted flex items-center justify-center shrink-0">
+            {product.imageUrl ? (
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="w-full h-full object-cover rounded"
+              />
+            ) : (
+              <Package className="h-6 w-6 text-muted-foreground" />
+            )}
+          </div>
+          
+          {/* O segredo está aqui: flex-1 e min-w-0 permite que o texto seja limitado */}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-sm truncate">{product.name}</h3>
+            
+            {/* Limitamos a 2 linhas e forçamos quebra de palavras longas */}
+            <p className="text-xs text-muted-foreground line-clamp-2 break-words leading-tight">
+              {product.description || "Sem descrição"}
+            </p>
+            
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+              <span className="font-bold text-sm">R$ {product.price.toFixed(2)}</span>
+              <span className={`text-[10px] font-bold uppercase ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
+                Est: {product.stockQuantity}
+              </span>
+            </div>
+          </div>
+
+          {/* Botões fixos no canto direito que não encolhem */}
+          <div className="flex gap-1 shrink-0 ml-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => {
+                setEditingProduct(product);
+                setIsDialogOpen(true);
+              }}
+            >
+              <Pencil className="h-3.5 w-3.5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 text-destructive"
+              onClick={() => deleteMutation.mutate(product.id)}
+              disabled={deleteMutation.isPending}
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </Button>
+          </div>
         </div>
+      </CardContent>
+    </Card>
+  ))}
+</div>
       </div>
 
       <div>
-        <h2 className="text-3xl font-bold mb-6">Recent Orders</h2>
-        <div className="grid gap-4">
-          {ordersData?.orders.map((order) => (
-            <Card key={order.id}>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{order.orderNumber}</CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {order.customerName} • {order.customerEmail}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-lg">${order.total.toFixed(2)}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(order.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </div>
+  <h2 className="text-3xl font-bold mb-6">Pedidos recentes</h2>
+  <div className="grid gap-4 w-full"> {/* Adicionado w-full */}
+    {ordersData?.orders.map((order) => (
+      <Card key={order.id} className="overflow-hidden"> {/* Adicionado overflow-hidden */}
+        <CardHeader className="p-4"> {/* Ajustado padding para mobile */}
+          <div className="flex items-center justify-between gap-2"> {/* Gap para evitar colisão */}
+            <div className="min-w-0 flex-1"> {/* Segredo do truncamento */}
+              <CardTitle className="text-base truncate">{order.orderNumber}</CardTitle>
+              <p className="text-xs text-muted-foreground mt-1 truncate">
+                {order.customerName}
+              </p>
+              <p className="text-[10px] text-muted-foreground truncate italic">
+                {order.customerEmail}
+              </p>
+            </div>
+            <div className="text-right shrink-0"> {/* Impede o preço de espremer */}
+              <p className="font-bold text-base">R$ {order.total.toFixed(2)}</p>
+              <p className="text-[10px] text-muted-foreground">
+                {new Date(order.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
+    ))}
+  </div>
+</div>
     </div>
   );
 }

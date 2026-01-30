@@ -17,17 +17,19 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = () => {
     if (product.stockQuantity === 0) {
       toast({
-        title: "Out of stock",
-        description: "This product is currently unavailable.",
+        title: "Fora de estoque!",
+        description: "Este produto está indisponível temporariamente.",
         variant: "destructive",
+        duration: 3000,
       });
       return;
     }
 
     addItem(product);
     toast({
-      title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
+      title: "Adicionado ao carrinho",
+      description: `${product.name} foi adicionado ao seu carrinho.`,
+      duration: 3000,
     });
   };
 
@@ -47,7 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
         {product.stockQuantity === 0 && (
           <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
-            <Badge variant="destructive" className="text-base px-4 py-2">Out of Stock</Badge>
+            <Badge variant="destructive" className="text-base px-4 py-2">SEM ESTOQUE!</Badge>
           </div>
         )}
       </div>
@@ -59,7 +61,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </p>
         )}
         <div className="flex items-center justify-between mb-4">
-          <span className="text-3xl font-bold">${product.price.toFixed(2)}</span>
+          <span className="text-3xl font-bold">R$ {product.price.toFixed(2)}</span>
         </div>
         {product.stockQuantity > 0 && product.stockQuantity <= 5 && (
           <p className={`text-sm mb-3 ${
@@ -67,7 +69,7 @@ export function ProductCard({ product }: ProductCardProps) {
               ? "font-bold text-red-600" 
               : "font-semibold text-red-600"
           }`}>
-            {product.stockQuantity === 1 ? "Last one in stock!" : `Only ${product.stockQuantity} in stock`}
+            {product.stockQuantity === 1 ? "Último em estoque!!" : `Apenas ${product.stockQuantity} no estoque`}
           </p>
         )}
         <Button
@@ -76,7 +78,7 @@ export function ProductCard({ product }: ProductCardProps) {
           disabled={product.stockQuantity === 0}
         >
           <ShoppingCart className="h-5 w-5 mr-2" />
-          Add to Cart
+          Adicionar ao carrinho
         </Button>
       </CardContent>
     </Card>

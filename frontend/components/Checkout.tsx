@@ -40,16 +40,18 @@ export function Checkout({ onComplete }: CheckoutProps) {
       setOrderNumber(data.orderNumber);
       clearCart();
       toast({
-        title: "Order placed!",
-        description: `Order ${data.orderNumber} has been successfully placed.`,
+        title: "Pedido finalizado!",
+        description: `Pedido ${data.orderNumber} foi bem sucedido.`,
+        duration: 3000,
       });
     },
     onError: (error) => {
-      console.error("Order creation failed:", error);
+      console.error("Criação de pedido falhou:", error);
       toast({
-        title: "Order failed",
-        description: error instanceof Error ? error.message : "Failed to place order. Please try again.",
+        title: "Falha no pedido",
+        description: error instanceof Error ? error.message : "Falha em processar pedido, tente novamente mais tarde.",
         variant: "destructive",
+        duration: 3000,
       });
     },
   });
@@ -66,15 +68,15 @@ export function Checkout({ onComplete }: CheckoutProps) {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
             <CheckCircle2 className="h-10 w-10 text-green-600" />
           </div>
-          <CardTitle className="text-2xl">Order Confirmed!</CardTitle>
+          <CardTitle className="text-2xl">Pedido Confirmado!</CardTitle>
           <CardDescription className="space-y-2">
-            <p className="text-lg font-semibold text-foreground mt-2">Order Number: {orderNumber}</p>
-            <p>Thank you for your purchase. A confirmation has been sent to {customerEmail}</p>
-            <p className="text-xs text-muted-foreground">Save this order number for tracking your order.</p>
+            <p className="text-lg font-semibold text-foreground mt-2">Número do pedido: {orderNumber}</p>
+            <p>Obrigado por sua compra. Um email de confirmação foi enviado para {customerEmail}</p>
+            <p className="text-xs text-muted-foreground">Salve o número deste pedido para fins de rastrear seu pacote.</p>
           </CardDescription>
         </CardHeader>
         <CardFooter className="justify-center">
-          <Button onClick={onComplete}>Continue Shopping</Button>
+          <Button onClick={onComplete}>Continuar compras</Button>
         </CardFooter>
       </Card>
     );
@@ -83,20 +85,20 @@ export function Checkout({ onComplete }: CheckoutProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Checkout</CardTitle>
-        <CardDescription>Complete your purchase</CardDescription>
+        <CardTitle>Finalizar</CardTitle>
+        <CardDescription>Finalize sua compra</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">Nome</Label>
               <Input
                 id="name"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 required
-                placeholder="John Doe"
+                placeholder="Ana Maria"
               />
             </div>
             <div className="space-y-2">
@@ -107,7 +109,7 @@ export function Checkout({ onComplete }: CheckoutProps) {
                 value={customerEmail}
                 onChange={(e) => setCustomerEmail(e.target.value)}
                 required
-                placeholder="john@example.com"
+                placeholder="ana_mar@exemplo.com"
               />
             </div>
           </div>
@@ -115,26 +117,27 @@ export function Checkout({ onComplete }: CheckoutProps) {
           <Separator />
 
           <div className="space-y-3">
-            <h3 className="font-semibold">Order Summary</h3>
+            <h3 className="font-semibold">Resumo do pedido</h3>
             {items.map((item) => (
               <div key={item.product.id} className="flex justify-between text-sm">
                 <span>
                   {item.product.name} × {item.quantity}
                 </span>
-                <span>${(item.product.price * item.quantity).toFixed(2)}</span>
+                <span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
             <Separator />
             <div className="flex justify-between font-bold text-lg">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>R$ {total.toFixed(2)}</span>
             </div>
           </div>
         </CardContent>
+        <Separator />
         <CardFooter>
           <Button type="submit" className="w-full" size="lg" disabled={isPending}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isPending ? "Processing..." : "Place Order"}
+            {isPending ? "Processando..." : "Fazer pedido"}
           </Button>
         </CardFooter>
       </form>

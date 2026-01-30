@@ -20200,7 +20200,8 @@ const ToastViewport = reactExports.forwardRef(({ className, ...props }, ref) => 
   {
     ref,
     className: cn(
-      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
+      // Mudei "top-0" para "top-14" (aproximadamente 56px para baixo)
+      "fixed top-16 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
       className
     ),
     ...props
@@ -20757,7 +20758,7 @@ var ErrCode = /* @__PURE__ */ ((ErrCode2) => {
   ErrCode2["Unauthenticated"] = "unauthenticated";
   return ErrCode2;
 })(ErrCode || {});
-const backend = new Client("http://192.168.15.86:4000", { requestInit: { credentials: "include" } });
+const backend = new Client("https://staging-e-commerce-tidata-5wri.encr.app", { requestInit: { credentials: "include" } });
 var REACT_LAZY_TYPE = Symbol.for("react.lazy");
 var use = React$1[" use ".trim().toString()];
 function isPromiseLike(value) {
@@ -21006,16 +21007,18 @@ function ProductCard({ product: product2 }) {
   const handleAddToCart = () => {
     if (product2.stockQuantity === 0) {
       toast2({
-        title: "Out of stock",
-        description: "This product is currently unavailable.",
-        variant: "destructive"
+        title: "Fora de estoque!",
+        description: "Este produto está indisponível temporariamente.",
+        variant: "destructive",
+        duration: 3e3
       });
       return;
     }
     addItem(product2);
     toast2({
-      title: "Added to cart",
-      description: `${product2.name} has been added to your cart.`
+      title: "Adicionado ao carrinho",
+      description: `${product2.name} foi adicionado ao seu carrinho.`,
+      duration: 3e3
     });
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "overflow-hidden transition-all active:scale-[0.98]", children: [
@@ -21028,16 +21031,16 @@ function ProductCard({ product: product2 }) {
           className: "w-full h-full object-cover"
         }
       ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full h-full flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-20 w-20 text-muted-foreground" }) }),
-      product2.stockQuantity === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-background/80 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "destructive", className: "text-base px-4 py-2", children: "Out of Stock" }) })
+      product2.stockQuantity === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-background/80 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "destructive", className: "text-base px-4 py-2", children: "SEM ESTOQUE!" }) })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "p-5", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-xl mb-2", children: product2.name }),
       product2.description && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mb-4 line-clamp-2", children: product2.description }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-3xl font-bold", children: [
-        "$",
+        "R$ ",
         product2.price.toFixed(2)
       ] }) }),
-      product2.stockQuantity > 0 && product2.stockQuantity <= 5 && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: `text-sm mb-3 ${product2.stockQuantity === 1 ? "font-bold text-red-600" : "font-semibold text-red-600"}`, children: product2.stockQuantity === 1 ? "Last one in stock!" : `Only ${product2.stockQuantity} in stock` }),
+      product2.stockQuantity > 0 && product2.stockQuantity <= 5 && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: `text-sm mb-3 ${product2.stockQuantity === 1 ? "font-bold text-red-600" : "font-semibold text-red-600"}`, children: product2.stockQuantity === 1 ? "Último em estoque!!" : `Apenas ${product2.stockQuantity} no estoque` }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         Button,
         {
@@ -21046,7 +21049,7 @@ function ProductCard({ product: product2 }) {
           disabled: product2.stockQuantity === 0,
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(ShoppingCart, { className: "h-5 w-5 mr-2" }),
-            "Add to Cart"
+            "Adicionar ao carrinho"
           ]
         }
       )
@@ -21062,10 +21065,10 @@ function ProductList() {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center py-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "h-8 w-8 animate-spin text-muted-foreground" }) });
   }
   if (error) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center py-12 text-destructive", children: "Failed to load products. Please try again." });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center py-12 text-destructive", children: "Falha em carregar os produtos. Por favor tente novamente." });
   }
   if (!(data == null ? void 0 : data.products.length)) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center py-12 text-muted-foreground", children: "No products available yet." });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center py-12 text-muted-foreground", children: "Ainda não há produtos disponíveis." });
   }
   const sortedProducts = data.products.slice().sort((a, b) => {
     if (a.stockQuantity === 0 && b.stockQuantity > 0) return 1;
@@ -21079,8 +21082,9 @@ function ProductList() {
     }
     return 0;
   });
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Products" }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-4", children: [
+    " ",
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold mb-4", children: "Produtos" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: sortedProducts.map((product2) => /* @__PURE__ */ jsxRuntimeExports.jsx(ProductCard, { product: product2 }, product2.id)) })
   ] });
 }
@@ -21266,16 +21270,18 @@ function Checkout({ onComplete }) {
       setOrderNumber(data.orderNumber);
       clearCart();
       toast2({
-        title: "Order placed!",
-        description: `Order ${data.orderNumber} has been successfully placed.`
+        title: "Pedido finalizado!",
+        description: `Pedido ${data.orderNumber} foi bem sucedido.`,
+        duration: 3e3
       });
     },
     onError: (error) => {
-      console.error("Order creation failed:", error);
+      console.error("Criação de pedido falhou:", error);
       toast2({
-        title: "Order failed",
-        description: error instanceof Error ? error.message : "Failed to place order. Please try again.",
-        variant: "destructive"
+        title: "Falha no pedido",
+        description: error instanceof Error ? error.message : "Falha em processar pedido, tente novamente mais tarde.",
+        variant: "destructive",
+        duration: 3e3
       });
     }
   });
@@ -21287,32 +21293,32 @@ function Checkout({ onComplete }) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "text-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-10 w-10 text-green-600" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-2xl", children: "Order Confirmed!" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-2xl", children: "Pedido Confirmado!" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(CardDescription, { className: "space-y-2", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-lg font-semibold text-foreground mt-2", children: [
-            "Order Number: ",
+            "Número do pedido: ",
             orderNumber
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-            "Thank you for your purchase. A confirmation has been sent to ",
+            "Obrigado por sua compra. Um email de confirmação foi enviado para ",
             customerEmail
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "Save this order number for tracking your order." })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "Salve o número deste pedido para fins de rastrear seu pacote." })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { className: "justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: onComplete, children: "Continue Shopping" }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { className: "justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: onComplete, children: "Continuar compras" }) })
     ] });
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: "Checkout" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Complete your purchase" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: "Finalizar" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Finalize sua compra" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-6", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "name", children: "Name" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "name", children: "Nome" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               Input,
               {
@@ -21320,7 +21326,7 @@ function Checkout({ onComplete }) {
                 value: customerName,
                 onChange: (e) => setCustomerName(e.target.value),
                 required: true,
-                placeholder: "John Doe"
+                placeholder: "Ana Maria"
               }
             )
           ] }),
@@ -21334,14 +21340,14 @@ function Checkout({ onComplete }) {
                 value: customerEmail,
                 onChange: (e) => setCustomerEmail(e.target.value),
                 required: true,
-                placeholder: "john@example.com"
+                placeholder: "ana_mar@exemplo.com"
               }
             )
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold", children: "Order Summary" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold", children: "Resumo do pedido" }),
           items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-sm", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
               item.product.name,
@@ -21349,7 +21355,7 @@ function Checkout({ onComplete }) {
               item.quantity
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-              "$",
+              "R$ ",
               (item.product.price * item.quantity).toFixed(2)
             ] })
           ] }, item.product.id)),
@@ -21357,15 +21363,16 @@ function Checkout({ onComplete }) {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between font-bold text-lg", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Total" }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-              "$",
+              "R$ ",
               total.toFixed(2)
             ] })
           ] })
         ] })
       ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}),
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { type: "submit", className: "w-full", size: "lg", disabled: isPending, children: [
         isPending && /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "mr-2 h-4 w-4 animate-spin" }),
-        isPending ? "Processing..." : "Place Order"
+        isPending ? "Processando..." : "Fazer pedido"
       ] }) })
     ] })
   ] });
@@ -22891,11 +22898,11 @@ function AdminPanel() {
     onSuccess: () => {
       queryClient2.invalidateQueries({ queryKey: ["products"] });
       setIsDialogOpen(false);
-      toast2({ title: "Product created successfully" });
+      toast2({ title: "Produto criado com successo", duration: 3e3 });
     },
     onError: (error) => {
-      console.error("Failed to create product:", error);
-      toast2({ title: "Failed to create product", variant: "destructive" });
+      console.error("Falha em criar produto:", error);
+      toast2({ title: "Falha em criar produto", variant: "destructive", duration: 3e3 });
     }
   });
   const updateMutation = useMutation({
@@ -22904,22 +22911,22 @@ function AdminPanel() {
       queryClient2.invalidateQueries({ queryKey: ["products"] });
       setIsDialogOpen(false);
       setEditingProduct(null);
-      toast2({ title: "Product updated successfully" });
+      toast2({ title: "Produto atualizado com successo", duration: 3e3 });
     },
     onError: (error) => {
-      console.error("Failed to update product:", error);
-      toast2({ title: "Failed to update product", variant: "destructive" });
+      console.error("Falha em atualizar produto:", error);
+      toast2({ title: "Falha em atualizar produto", variant: "destructive", duration: 3e3 });
     }
   });
   const deleteMutation = useMutation({
     mutationFn: (id) => backend.product.remove({ id }),
     onSuccess: () => {
       queryClient2.invalidateQueries({ queryKey: ["products"] });
-      toast2({ title: "Product deleted successfully" });
+      toast2({ title: "Product deleted successfully", duration: 3e3 });
     },
     onError: (error) => {
-      console.error("Failed to delete product:", error);
-      toast2({ title: "Failed to delete product", variant: "destructive" });
+      console.error("Falha em deletar produto:", error);
+      toast2({ title: "Falha em deletar produto", variant: "destructive", duration: 3e3 });
     }
   });
   const handleSubmit = (e) => {
@@ -22944,20 +22951,20 @@ function AdminPanel() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-8", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-6", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold", children: "Products" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold", children: "Produtos" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog, { open: isDialogOpen, onOpenChange: (open) => {
           setIsDialogOpen(open);
           if (!open) setEditingProduct(null);
         }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { className: "h-4 w-4 mr-2" }),
-            "Add Product"
+            "Adc Produto"
           ] }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogContent, { className: "max-w-md", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { children: editingProduct ? "Edit Product" : "Add Product" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { children: editingProduct ? "Editar Produto" : "Adc Produto" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "name", children: "Name" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "name", children: "Nome" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Input,
                   {
@@ -22969,7 +22976,7 @@ function AdminPanel() {
                 )
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "description", children: "Description" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "description", children: "Descrição" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Textarea,
                   {
@@ -22981,7 +22988,7 @@ function AdminPanel() {
                 )
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "price", children: "Price" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "price", children: "Preço" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Input,
                   {
@@ -22996,7 +23003,7 @@ function AdminPanel() {
                 )
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "stockQuantity", children: "Stock Quantity" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "stockQuantity", children: "Qtd estoque" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Input,
                   {
@@ -23010,7 +23017,7 @@ function AdminPanel() {
                 )
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "imageUrl", children: "Image URL" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "imageUrl", children: "URL da Imagem" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Input,
                   {
@@ -23024,84 +23031,102 @@ function AdminPanel() {
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { type: "submit", className: "w-full", disabled: createMutation.isPending || updateMutation.isPending, children: [
                 (createMutation.isPending || updateMutation.isPending) && /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "mr-2 h-4 w-4 animate-spin" }),
-                editingProduct ? "Update" : "Create"
+                editingProduct ? "Atualizar" : "Criar"
               ] })
             ] })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4", children: productsData == null ? void 0 : productsData.products.slice().sort((a, b) => {
-        if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
-        if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
-        return a.stockQuantity - b.stockQuantity;
-      }).map((product2) => /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-16 h-16 rounded bg-muted flex items-center justify-center shrink-0", children: product2.imageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
-          {
-            src: product2.imageUrl,
-            alt: product2.name,
-            className: "w-full h-full object-cover rounded"
-          }
-        ) : /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-8 w-8 text-muted-foreground" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold truncate", children: product2.name }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground truncate", children: product2.description || "No description" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 mt-1", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold", children: [
-              "$",
-              product2.price.toFixed(2)
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-4 w-full", children: [
+        " ",
+        productsData == null ? void 0 : productsData.products.slice().sort((a, b) => {
+          if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
+          if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
+          return a.stockQuantity - b.stockQuantity;
+        }).map((product2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "overflow-hidden", children: [
+          " ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-14 h-14 rounded bg-muted flex items-center justify-center shrink-0", children: product2.imageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: product2.imageUrl,
+                alt: product2.name,
+                className: "w-full h-full object-cover rounded"
+              }
+            ) : /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-6 w-6 text-muted-foreground" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-sm truncate", children: product2.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground line-clamp-2 break-words leading-tight", children: product2.description || "Sem descrição" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-x-3 gap-y-1 mt-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-sm", children: [
+                  "R$ ",
+                  product2.price.toFixed(2)
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: `text-[10px] font-bold uppercase ${product2.stockQuantity <= 5 ? "text-red-600" : "text-muted-foreground"}`, children: [
+                  "Est: ",
+                  product2.stockQuantity
+                ] })
+              ] })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: `text-sm font-semibold ${product2.stockQuantity <= 5 ? "text-red-600" : "text-muted-foreground"}`, children: [
-              "Stock: ",
-              product2.stockQuantity
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-1 shrink-0 ml-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button,
+                {
+                  variant: "outline",
+                  size: "icon",
+                  className: "h-8 w-8",
+                  onClick: () => {
+                    setEditingProduct(product2);
+                    setIsDialogOpen(true);
+                  },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Pencil, { className: "h-3.5 w-3.5" })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button,
+                {
+                  variant: "outline",
+                  size: "icon",
+                  className: "h-8 w-8 text-destructive",
+                  onClick: () => deleteMutation.mutate(product2.id),
+                  disabled: deleteMutation.isPending,
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-3.5 w-3.5" })
+                }
+              )
             ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Button,
-            {
-              variant: "outline",
-              size: "icon",
-              onClick: () => {
-                setEditingProduct(product2);
-                setIsDialogOpen(true);
-              },
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Pencil, { className: "h-4 w-4" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Button,
-            {
-              variant: "outline",
-              size: "icon",
-              onClick: () => deleteMutation.mutate(product2.id),
-              disabled: deleteMutation.isPending,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-4 w-4" })
-            }
-          )
-        ] })
-      ] }) }) }, product2.id)) })
+          ] }) })
+        ] }, product2.id))
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold mb-6", children: "Recent Orders" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4", children: ordersData == null ? void 0 : ordersData.orders.map((order2) => /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-lg", children: order2.orderNumber }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-muted-foreground mt-1", children: [
-            order2.customerName,
-            " • ",
-            order2.customerEmail
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold mb-6", children: "Pedidos recentes" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-4 w-full", children: [
+        " ",
+        ordersData == null ? void 0 : ordersData.orders.map((order2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "overflow-hidden", children: [
+          " ",
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "p-4", children: [
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-2", children: [
+              " ",
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-base truncate", children: order2.orderNumber }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1 truncate", children: order2.customerName }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground truncate italic", children: order2.customerEmail })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0", children: [
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "font-bold text-base", children: [
+                  "R$ ",
+                  order2.total.toFixed(2)
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground", children: new Date(order2.createdAt).toLocaleDateString() })
+              ] })
+            ] })
           ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "font-bold text-lg", children: [
-            "$",
-            order2.total.toFixed(2)
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: new Date(order2.createdAt).toLocaleDateString() })
-        ] })
-      ] }) }) }, order2.id)) })
+        ] }, order2.id))
+      ] })
     ] })
   ] });
 }
@@ -23121,11 +23146,11 @@ function OrderSearch() {
       setOrder(data);
     },
     onError: (error) => {
-      console.error("Order search failed:", error);
+      console.error("Pesquisa do pedido falhou:", error);
       setOrder(null);
       toast2({
-        title: "Order not found",
-        description: error instanceof Error ? error.message : "Could not find an order with that number.",
+        title: "Pedido não encontrado",
+        description: error instanceof Error ? error.message : "Não foi possível encontrar o pedido com esses dados.",
         variant: "destructive"
       });
     }
@@ -23143,19 +23168,19 @@ function OrderSearch() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: "Track Your Order" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Enter your order number to view order details" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: "Pesquise seu pedido" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Insira o número do pedido para mais informações" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "flex gap-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 space-y-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "orderNumber", className: "sr-only", children: "Order Number" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "orderNumber", className: "sr-only", children: "Número do pedido" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             Input,
             {
               id: "orderNumber",
               value: orderNumber,
               onChange: (e) => setOrderNumber(e.target.value),
-              placeholder: "Enter order number (e.g., ORD-1234567890-ABC123)",
+              placeholder: "Nº pedido (ex: ORD-1234567890-ABC123)",
               required: true
             }
           )
@@ -23171,9 +23196,9 @@ function OrderSearch() {
             order2.orderNumber
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(CardDescription, { className: "mt-2", children: [
-            "Placed on ",
+            "Criado em ",
             new Date(order2.createdAt).toLocaleDateString(),
-            " at",
+            " as",
             " ",
             new Date(order2.createdAt).toLocaleTimeString()
           ] })
@@ -23188,10 +23213,10 @@ function OrderSearch() {
       ] }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-6", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold mb-2", children: "Customer Information" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold mb-2", children: "Informações do Cliente" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-sm space-y-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground", children: [
-              "Name: ",
+              "Nome: ",
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-foreground", children: order2.customerName })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground", children: [
@@ -23202,24 +23227,24 @@ function OrderSearch() {
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold mb-3", children: "Order Items" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold mb-3", children: "Ordenar pedidos" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3", children: order2.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start py-2 border-b last:border-0", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-medium", children: item.productName }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-muted-foreground", children: [
-                "Quantity: ",
+                "Quantidade: ",
                 item.quantity
               ] })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "font-medium", children: [
-                "$",
+                "R$ ",
                 (item.priceAtPurchase * item.quantity).toFixed(2)
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-muted-foreground", children: [
-                "$",
+                "R$ ",
                 item.priceAtPurchase.toFixed(2),
-                " each"
+                " cada"
               ] })
             ] })
           ] }, item.id)) })
@@ -23228,14 +23253,14 @@ function OrderSearch() {
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center text-lg font-bold", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Total" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-            "$",
+            "R$ ",
             order2.total.toFixed(2)
           ] })
         ] })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold mb-4", children: "All Orders" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold mb-4", children: "Todos os pedidos" }),
       isLoadingOrders ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center py-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "h-8 w-8 animate-spin text-muted-foreground" }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4", children: ordersData == null ? void 0 : ordersData.orders.map((orderItem) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         Card,
         {
@@ -23252,7 +23277,7 @@ function OrderSearch() {
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "font-bold text-lg", children: [
-                "$",
+                "R$ ",
                 orderItem.total.toFixed(2)
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: new Date(orderItem.createdAt).toLocaleDateString() })
@@ -23280,21 +23305,21 @@ function CartDrawer({ isOpen, onClose, onCheckout }) {
       {
         className: `fixed top-0 right-0 bottom-0 w-full max-w-md bg-background z-50 shadow-xl transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"}`,
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-full", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between p-4 border-b", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between p-4 border-b pt-[env(safe-area-inset-top)]", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-xl font-bold", children: [
-              "Cart ",
+              "Carrinho ",
               items.length > 0 && `(${items.length})`
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "ghost", size: "icon", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-6 w-6" }) })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto p-4", children: items.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-center py-12", children: "Your cart is empty" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto p-4 pb-10", children: items.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-center py-12", children: "Seu carrinho está vazio" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-4", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-medium", children: item.product.name }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-muted-foreground", children: [
-                  "$",
+                  "R$ ",
                   item.product.price.toFixed(2),
-                  " each"
+                  " cada"
                 ] })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -23333,17 +23358,18 @@ function CartDrawer({ isOpen, onClose, onCheckout }) {
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-auto font-semibold text-lg", children: [
-                "$",
+                "R$ ",
                 (item.product.price * item.quantity).toFixed(2)
               ] })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {})
           ] }, item.product.id)) }) }),
-          items.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t p-4 space-y-4 safe-area-inset-bottom", children: [
+          items.length > 0 && /* RODAPÉ: Safe Area para a barra de gestos */
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t p-4 space-y-4 pb-[calc(1rem+env(safe-area-inset-bottom))]", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between text-xl font-bold", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Total" }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                "$",
+                "R$ ",
                 total.toFixed(2)
               ] })
             ] }),
@@ -23355,7 +23381,7 @@ function CartDrawer({ isOpen, onClose, onCheckout }) {
                   onCheckout();
                   onClose();
                 },
-                children: "Proceed to Checkout"
+                children: "Ir para pagamento"
               }
             )
           ] })
@@ -23366,11 +23392,11 @@ function CartDrawer({ isOpen, onClose, onCheckout }) {
 }
 function BottomNav({ activeTab, onTabChange }) {
   const tabs = [
-    { id: "shop", label: "Shop", icon: ShoppingCart },
-    { id: "track", label: "Track", icon: Search },
+    { id: "shop", label: "Loja", icon: ShoppingCart },
+    { id: "track", label: "Pesquisa", icon: Search },
     { id: "admin", label: "Admin", icon: LayoutDashboard }
   ];
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "fixed bottom-0 left-0 right-0 bg-background border-t z-50 safe-area-inset-bottom", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-around h-16", children: tabs.map((tab) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "fixed bottom-0 left-0 right-0 bg-background border-t z-50 pb-[env(safe-area-inset-bottom)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-around h-16", children: tabs.map((tab) => {
     const Icon2 = tab.icon;
     const isActive = activeTab === tab.id;
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -23397,53 +23423,56 @@ function AppInner() {
     setActiveTab(tab);
     setShowCheckout(false);
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-background pb-16", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "border-b sticky top-0 bg-background z-10", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-      showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Button,
+  return (
+    // Adicionamos pb-safe para o conteúdo não ficar atrás do BottomNav
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-background pb-[calc(6rem+env(safe-area-inset-bottom))]", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "border-b sticky top-0 bg-background z-10 pt-[env(safe-area-inset-top)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+        showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            variant: "ghost",
+            size: "icon",
+            onClick: () => setShowCheckout(false),
+            className: "h-10 w-10",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { className: "h-6 w-6" })
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-6 w-6" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold", children: "Loja Tidata" })
+        ] }),
+        activeTab === "shop" && !showCheckout && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Button,
+          {
+            variant: "ghost",
+            size: "icon",
+            onClick: () => setCartOpen(true),
+            className: "relative h-10 w-10",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ShoppingCart, { className: "h-6 w-6" }),
+              itemCount > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Badge,
+                {
+                  variant: "destructive",
+                  className: "absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 text-xs",
+                  children: itemCount
+                }
+              )
+            ]
+          }
+        )
+      ] }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "px-4 pt-2", children: activeTab === "shop" ? showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(Checkout, { onComplete: () => setShowCheckout(false) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ProductList, {}) : activeTab === "track" ? /* @__PURE__ */ jsxRuntimeExports.jsx(OrderSearch, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(AdminPanel, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BottomNav, { activeTab, onTabChange: handleTabChange }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        CartDrawer,
         {
-          variant: "ghost",
-          size: "icon",
-          onClick: () => setShowCheckout(false),
-          className: "h-10 w-10",
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { className: "h-6 w-6" })
-        }
-      ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-6 w-6" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold", children: "Store" })
-      ] }),
-      activeTab === "shop" && !showCheckout && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        Button,
-        {
-          variant: "ghost",
-          size: "icon",
-          onClick: () => setCartOpen(true),
-          className: "relative h-10 w-10",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ShoppingCart, { className: "h-6 w-6" }),
-            itemCount > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Badge,
-              {
-                variant: "destructive",
-                className: "absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 text-xs",
-                children: itemCount
-              }
-            )
-          ]
+          isOpen: cartOpen,
+          onClose: () => setCartOpen(false),
+          onCheckout: () => setShowCheckout(true)
         }
       )
-    ] }) }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "px-4 py-6", children: activeTab === "shop" ? showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(Checkout, { onComplete: () => setShowCheckout(false) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ProductList, {}) : activeTab === "track" ? /* @__PURE__ */ jsxRuntimeExports.jsx(OrderSearch, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(AdminPanel, {}) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(BottomNav, { activeTab, onTabChange: handleTabChange }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      CartDrawer,
-      {
-        isOpen: cartOpen,
-        onClose: () => setCartOpen(false),
-        onCheckout: () => setShowCheckout(true)
-      }
-    )
-  ] });
+    ] })
+  );
 }
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {

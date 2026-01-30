@@ -28,11 +28,11 @@ export function OrderSearch() {
       setOrder(data);
     },
     onError: (error) => {
-      console.error("Order search failed:", error);
+      console.error("Pesquisa do pedido falhou:", error);
       setOrder(null);
       toast({
-        title: "Order not found",
-        description: error instanceof Error ? error.message : "Could not find an order with that number.",
+        title: "Pedido não encontrado",
+        description: error instanceof Error ? error.message : "Não foi possível encontrar o pedido com esses dados.",
         variant: "destructive",
       });
     },
@@ -54,18 +54,18 @@ export function OrderSearch() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Track Your Order</CardTitle>
-          <CardDescription>Enter your order number to view order details</CardDescription>
+          <CardTitle>Pesquise seu pedido</CardTitle>
+          <CardDescription>Insira o número do pedido para mais informações</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="flex gap-2">
             <div className="flex-1 space-y-2">
-              <Label htmlFor="orderNumber" className="sr-only">Order Number</Label>
+              <Label htmlFor="orderNumber" className="sr-only">Número do pedido</Label>
               <Input
                 id="orderNumber"
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
-                placeholder="Enter order number (e.g., ORD-1234567890-ABC123)"
+                placeholder="Nº pedido (ex: ORD-1234567890-ABC123)"
                 required
               />
             </div>
@@ -90,7 +90,7 @@ export function OrderSearch() {
                   {order.orderNumber}
                 </CardTitle>
                 <CardDescription className="mt-2">
-                  Placed on {new Date(order.createdAt).toLocaleDateString()} at{" "}
+                  Criado em {new Date(order.createdAt).toLocaleDateString()} as{" "}
                   {new Date(order.createdAt).toLocaleTimeString()}
                 </CardDescription>
               </div>
@@ -102,9 +102,9 @@ export function OrderSearch() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
-              <h3 className="font-semibold mb-2">Customer Information</h3>
+              <h3 className="font-semibold mb-2">Informações do Cliente</h3>
               <div className="text-sm space-y-1">
-                <p className="text-muted-foreground">Name: <span className="text-foreground">{order.customerName}</span></p>
+                <p className="text-muted-foreground">Nome: <span className="text-foreground">{order.customerName}</span></p>
                 <p className="text-muted-foreground">Email: <span className="text-foreground">{order.customerEmail}</span></p>
               </div>
             </div>
@@ -112,17 +112,17 @@ export function OrderSearch() {
             <Separator />
 
             <div>
-              <h3 className="font-semibold mb-3">Order Items</h3>
+              <h3 className="font-semibold mb-3">Ordenar pedidos</h3>
               <div className="space-y-3">
                 {order.items.map((item) => (
                   <div key={item.id} className="flex justify-between items-start py-2 border-b last:border-0">
                     <div>
                       <p className="font-medium">{item.productName}</p>
-                      <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
+                      <p className="text-sm text-muted-foreground">Quantidade: {item.quantity}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium">${(item.priceAtPurchase * item.quantity).toFixed(2)}</p>
-                      <p className="text-sm text-muted-foreground">${item.priceAtPurchase.toFixed(2)} each</p>
+                      <p className="font-medium">R$ {(item.priceAtPurchase * item.quantity).toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">R$ {item.priceAtPurchase.toFixed(2)} cada</p>
                     </div>
                   </div>
                 ))}
@@ -133,14 +133,14 @@ export function OrderSearch() {
 
             <div className="flex justify-between items-center text-lg font-bold">
               <span>Total</span>
-              <span>${order.total.toFixed(2)}</span>
+              <span>R$ {order.total.toFixed(2)}</span>
             </div>
           </CardContent>
         </Card>
       )}
 
       <div>
-        <h2 className="text-2xl font-bold mb-4">All Orders</h2>
+        <h2 className="text-2xl font-bold mb-4">Todos os pedidos</h2>
         {isLoadingOrders ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -162,7 +162,7 @@ export function OrderSearch() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-lg">${orderItem.total.toFixed(2)}</p>
+                      <p className="font-bold text-lg">R$ {orderItem.total.toFixed(2)}</p>
                       <p className="text-sm text-muted-foreground">
                         {new Date(orderItem.createdAt).toLocaleDateString()}
                       </p>

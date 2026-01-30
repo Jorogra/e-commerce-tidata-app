@@ -20,7 +20,7 @@ export function ProductList() {
   if (error) {
     return (
       <div className="text-center py-12 text-destructive">
-        Failed to load products. Please try again.
+        Falha em carregar os produtos. Por favor tente novamente.
       </div>
     );
   }
@@ -28,7 +28,7 @@ export function ProductList() {
   if (!data?.products.length) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        No products available yet.
+        Ainda não há produtos disponíveis.
       </div>
     );
   }
@@ -50,13 +50,14 @@ export function ProductList() {
   });
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">Products</h2>
-      <div className="space-y-4">
-        {sortedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+  <div className="pt-4"> {/* Adicionamos um pequeno padding aqui para desgrudar do header */}
+    {/* Se quiser manter o título, reduza a margem. Se quiser igualar às outras abas, pode remover o h2 */}
+    <h2 className="text-2xl font-bold mb-4">Produtos</h2> 
+    <div className="space-y-4">
+      {sortedProducts.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
     </div>
-  );
+  </div>
+);
 }

@@ -124,7 +124,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+  main {
+  padding-bottom: 2rem; /* Adiciona 32px de folga no final de cada página */
+  }
   body {
     @apply bg-background text-foreground;
+    
+    /* Rodapé: Usamos um valor maior para garantir que suba */
+    /* Se o seu footer for fixo, precisaremos aplicar isso na classe dele */
+    padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+    
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    min-height: 100vh;
   }
 }

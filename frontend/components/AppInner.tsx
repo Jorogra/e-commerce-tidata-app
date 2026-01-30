@@ -22,10 +22,13 @@ export function AppInner() {
     setShowCheckout(false);
   };
 
-  return (
-    <div className="min-h-screen bg-background pb-16">
-      <header className="border-b sticky top-0 bg-background z-10">
-        <div className="px-4 py-4">
+return (
+    // Adicionamos pb-safe para o conteúdo não ficar atrás do BottomNav
+    <div className="min-h-screen bg-background pb-[calc(6rem+env(safe-area-inset-bottom))]">
+      
+      {/* HEADER: Adicionamos pt-safe para afastar o título da barra de status (bateria/relógio) */}
+      <header className="border-b sticky top-0 bg-background z-10 pt-[env(safe-area-inset-top)]">
+        <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             {showCheckout ? (
               <Button
@@ -39,7 +42,7 @@ export function AppInner() {
             ) : (
               <div className="flex items-center gap-2">
                 <Package className="h-6 w-6" />
-                <h1 className="text-xl font-bold">Store</h1>
+                <h1 className="text-xl font-bold">Loja Tidata</h1>
               </div>
             )}
             {activeTab === "shop" && !showCheckout && (
@@ -64,7 +67,7 @@ export function AppInner() {
         </div>
       </header>
 
-      <main className="px-4 py-6">
+      <main className="px-4 pt-2">
         {activeTab === "shop" ? (
           showCheckout ? (
             <Checkout onComplete={() => setShowCheckout(false)} />

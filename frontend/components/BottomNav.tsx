@@ -7,14 +7,14 @@ interface BottomNavProps {
 
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   const tabs = [
-    { id: "shop" as const, label: "Shop", icon: ShoppingCart },
-    { id: "track" as const, label: "Track", icon: Search },
+    { id: "shop" as const, label: "Loja", icon: ShoppingCart },
+    { id: "track" as const, label: "Pesquisa", icon: Search },
     { id: "admin" as const, label: "Admin", icon: LayoutDashboard },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-background border-t z-50 safe-area-inset-bottom">
-      <div className="flex items-center justify-around h-16">
+    <nav className="fixed bottom-0 left-0 right-0 bg-background border-t z-50 pb-[env(safe-area-inset-bottom)]">
+  <div className="flex items-center justify-around h-16">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
