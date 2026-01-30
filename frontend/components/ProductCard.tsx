@@ -20,7 +20,8 @@ export function ProductCard({ product }: ProductCardProps) {
         title: "Fora de estoque!",
         description: "Este produto está indisponível temporariamente.",
         variant: "destructive",
-        duration: 3000,
+        duration: 2500,
+        className: "pointer-events-none touch-none",
       });
       return;
     }
@@ -29,7 +30,8 @@ export function ProductCard({ product }: ProductCardProps) {
     toast({
       title: "Adicionado ao carrinho",
       description: `${product.name} foi adicionado ao seu carrinho.`,
-      duration: 3000,
+      duration: 2500,
+      className: "pointer-events-none touch-none",
     });
   };
 

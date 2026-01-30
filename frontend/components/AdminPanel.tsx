@@ -34,6 +34,7 @@ export function AdminPanel({ setActiveTab, setSearchQuery }: AdminPanelProps) {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [countdown, setCountdown] = useState(0);
   const [expandedOrder, setExpandedOrder] = useState<string | number | null>(null);
+  const [adminSearchTerm, setAdminSearchTerm] = useState("");
 
   const { data: productsData, isLoading: isLoadingProducts } = useQuery({
     queryKey: ["products"],
@@ -193,18 +194,18 @@ export function AdminPanel({ setActiveTab, setSearchQuery }: AdminPanelProps) {
         </div>
 
         <div className="grid gap-4 w-full"> {/* Garante que o grid use 100% da largura */}
-  {productsData?.products
-    .slice()
-    .sort((a, b) => {
-      if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
-      if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
+          {productsData?.products
+            .slice()
+            .sort((a, b) => {
+          if (a.stockQuantity <= 5 && b.stockQuantity > 5) return -1;
+          if (a.stockQuantity > 5 && b.stockQuantity <= 5) return 1;
       return a.stockQuantity - b.stockQuantity;
-    })
+          })
     .map((product) => (
     <Card key={product.id} className="overflow-hidden"> {/* Impede vazamento lateral do card */}
-      <CardContent className="p-4">
-        <div className="flex items-center gap-3"> {/* Reduzi o gap para mobile */}
-          <div className="w-14 h-14 rounded bg-muted flex items-center justify-center shrink-0">
+      <CardContent className="p-3">
+        <div className="flex items-center gap-2"> {/* Reduzi o gap para mobile */}
+          <div className="w-10 h-10 rounded bg-muted shrink-0">
             {product.imageUrl ? (
               <img
                 src={product.imageUrl}
@@ -218,23 +219,23 @@ export function AdminPanel({ setActiveTab, setSearchQuery }: AdminPanelProps) {
           
           {/* O segredo está aqui: flex-1 e min-w-0 permite que o texto seja limitado */}
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-sm truncate">{product.name}</h3>
+            <h3 className="font-bold text-xs truncate leading-none mb-1">{product.name}</h3>
             
             {/* Limitamos a 2 linhas e forçamos quebra de palavras longas */}
-            <p className="text-xs text-muted-foreground line-clamp-2 break-words leading-tight">
+            <p className="text-[10px] text-muted-foreground line-clamp-1 break-words">
               {product.description || "Sem descrição"}
             </p>
             
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
-              <span className="font-bold text-sm">R$ {product.price.toFixed(2)}</span>
-              <span className={`text-[15px] font-bold uppercase ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
-                Qtd: {product.stockQuantity}
+            <div className="flex items-center gap-3 mt-1">
+              <span className="font-bold text-xs text-foreground">R$ {product.price.toFixed(2)}</span>
+              <span className={`text-[11px] font-bold ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
+                QTD: {product.stockQuantity}
               </span>
             </div>
           </div>
 
           {/* Botões fixos no canto direito que não encolhem */}
-<div className="flex gap-1 shrink-0 ml-2">
+<div className="flex gap-1 shrink-0 ml-1">
   <Button
     variant="outline"
     size="icon"
@@ -263,7 +264,7 @@ export function AdminPanel({ setActiveTab, setSearchQuery }: AdminPanelProps) {
   }
 }}>
   <AlertDialogTrigger asChild>
-    <Button variant="outline" size="icon" className="h-8 w-8 text-destructive">
+    <Button variant="outline" size="icon" className="h-7 w-7 text-destructive">
       <Trash2 className="h-3.5 w-3.5" />
     </Button>
   </AlertDialogTrigger>
@@ -298,58 +299,56 @@ export function AdminPanel({ setActiveTab, setSearchQuery }: AdminPanelProps) {
 
       <div>
   <h2 className="text-3xl font-bold mb-6">Pedidos recentes</h2>
-<div className="grid gap-4 w-full">
+<div className="grid gap-2 w-full"> {/* Reduzi o gap de 4 para 2 */}
   {ordersData?.orders.map((order) => {
-    const isExpanded = expandedOrder === order.id; // Verifica se este card está aberto
+    const isExpanded = expandedOrder === order.id;
     
     return (
       <Card 
         key={order.id} 
-        className="overflow-hidden cursor-pointer transition-all duration-300 active:scale-[0.98]"
+        className="overflow-hidden cursor-pointer border-border/50 shadow-none bg-white"
         onClick={() => setExpandedOrder(isExpanded ? null : order.id)}
       >
-        <CardHeader className="p-4">
-          <div className="flex items-center justify-between gap-2">
-            <div className="min-w-0 flex-1">
-              <CardTitle className="text-base truncate">{order.orderNumber}</CardTitle>
-              <p className="text-xs text-muted-foreground mt-1 truncate">
-                {order.customerName}
-              </p>
-              <p className="text-[10px] text-muted-foreground truncate italic">
-                {order.customerEmail}
-              </p>
-            </div>
-            <div className="text-right shrink-0">
-              <p className="font-bold text-base">R$ {order.total.toFixed(2)}</p>
-              <p className="text-[10px] text-muted-foreground">
-                {new Date(order.createdAt).toLocaleDateString()}
-              </p>
-            </div>
+        {/* Substituímos CardHeader por uma div p-2.5 (10px) */}
+        <div className="p-2.5 flex items-center justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <span className="text-[13px] font-bold block leading-tight truncate">
+              {order.orderNumber}
+            </span>
+            <span className="text-[11px] text-muted-foreground block truncate">
+              {order.customerName}
+            </span>
           </div>
-        </CardHeader>
-
-        {/* Conteúdo Expansível */}
-        <div 
-          className={`transition-all duration-300 ease-in-out ${
-            isExpanded ? "max-h-40 opacity-100 p-4 pt-0" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="border-t pt-3 flex flex-col gap-2">
-            <Button 
-              size="sm" 
-              variant="secondary"
-              className="w-full text-xs font-semibold flex gap-2"
-              onClick={(e) => {
-                e.stopPropagation(); // Evita fechar o card ao clicar no botão
-                setActiveTab("track"); // Muda para a aba de pesquisa
-                setSearchQuery(order.orderNumber); // Preenche a busca com o número do pedido
-              }}
-            >
-              <Search className="h-3 w-3" />
-              PESQUISAR ESSE PEDIDO
-            </Button>
+          
+          <div className="text-right shrink-0 leading-tight">
+            <p className="font-bold text-[13px]">R$ {order.total.toFixed(2)}</p>
+            <p className="text-[9px] text-muted-foreground">
+              {new Date(order.createdAt).toLocaleDateString()}
+            </p>
           </div>
         </div>
+
+        {/* Área expandida sem o CardContent para evitar padding extra */}
+        {isExpanded && (
+          <div className="px-2.5 pb-2.5">
+            <div className="border-t border-dashed pt-2">
+              <Button 
+                size="sm" 
+                variant="secondary"
+                className="w-full h-8 text-[10px] font-bold tracking-tight bg-slate-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveTab("track");
+                  setSearchQuery(order.orderNumber);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                <Search className="h-3 w-3 mr-1" />
+                PESQUISAR ESSE PEDIDO
+              </Button>
+            </div>
+          </div>
+        )}
       </Card>
     );
   })}

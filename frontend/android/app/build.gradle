@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.seu.app"
+    namespace = "com.tidata.store"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.seu.app"
+        applicationId "com.tidata.store"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

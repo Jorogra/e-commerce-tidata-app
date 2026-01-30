@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import backend from "~backend/client";
 import { Button } from "@/components/ui/button";
@@ -10,15 +10,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { Loader2, Search, ShoppingBag } from "lucide-react";
 import type { Order } from "~backend/order/create";
 
-export function OrderSearch() {
+export function OrderSearch({ searchQuery }: { searchQuery?: string }) {
   const { toast } = useToast();
   const [orderNumber, setOrderNumber] = useState("");
   const [order, setOrder] = useState<Order | null>(null);
-
-  const { data: ordersData, isLoading: isLoadingOrders } = useQuery({
-    queryKey: ["orders"],
-    queryFn: () => backend.order.list(),
-  });
 
   const { mutate: searchOrder, isPending } = useMutation({
     mutationFn: async (orderNum: string) => {
@@ -38,17 +33,31 @@ export function OrderSearch() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (orderNumber.trim()) {
-      searchOrder(orderNumber.trim());
+  useEffect(() => {
+    if (searchQuery) {
+      setOrderNumber(searchQuery);
+      searchOrder(searchQuery);
     }
-  };
+  }, [searchQuery, searchOrder]);
+
+  const { data: ordersData, isLoading: isLoadingOrders } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () => backend.order.list(),
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  if (orderNumber.trim()) {
+    searchOrder(orderNumber.trim());
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // subir ao topo
+  }
+};
 
   const handleOrderClick = (orderNum: string) => {
-    setOrderNumber(orderNum);
-    searchOrder(orderNum);
-  };
+  setOrderNumber(orderNum);
+  searchOrder(orderNum);
+  window.scrollTo({ top: 0, behavior: 'smooth' }); // sobe ao topo aqui também
+};
 
   return (
     <div className="space-y-6">

@@ -25,103 +25,109 @@ export function AppInner() {
   let backPressCount = 0;
 
   const backHandler = CapApp.addListener('backButton', ({ canGoBack }) => {
-    // 1. Se estivermos no Checkout, voltamos para a Loja
-    if (showCheckout) {
-      setShowCheckout(false);
-    } 
-    // 2. Se estivermos em Admin ou Pesquisa (track), voltamos para a Loja
-    else if (activeTab !== "shop") {
-      handleTabChange("shop");
-    } 
-    // 3. Se já estivermos na Loja (tela inicial)
-    else {
-      if (backPressCount === 0) {
-        backPressCount++;
-        // Exibe um alerta rápido (Toast)
-        toast({
-          description: "Pressione voltar novamente para sair",
-          duration: 2000,
-        });
-        // Reseta o contador após 2 segundos
-        setTimeout(() => { backPressCount = 0; }, 2000);
-      } else {
-        // Se clicar pela segunda vez em menos de 2s, o app fecha
-        CapApp.exitApp();
-      }
+  // 1. Se o Checkout estiver aberto, volta para o Carrinho ou Loja
+  if (showCheckout) {
+    setShowCheckout(false);
+    setCartOpen(true);
+  } 
+  // 2. NOVO: Se o Carrinho estiver aberto, fecha o Carrinho
+  else if (cartOpen) {
+    setCartOpen(false);
+  }
+  // 3. Se estiver em abas como Admin ou Pesquisa, volta para a aba "shop"
+  else if (activeTab !== "shop") {
+    handleTabChange("shop");
+  } 
+  // 4. Se já estiver na Loja Limpa (Home)
+  else {
+    if (backPressCount === 0) {
+      backPressCount++;
+      toast({
+        description: "Pressione voltar novamente para sair",
+        duration: 2000,
+      });
+      setTimeout(() => { backPressCount = 0; }, 2000);
+    } else {
+      CapApp.exitApp();
     }
-  });
+  }
+});
 
-  return () => {
-    backHandler.then(h => h.remove());
-  };
-}, [activeTab, showCheckout]); // Ele monitora a aba e se o checkout está aberto
+  return () => { backHandler.then(h => h.remove()); };
+  }, [activeTab, showCheckout, cartOpen]); // Ele monitora a aba e se o checkout está aberto
 
   const handleTabChange = (tab: "shop" | "track" | "admin") => {
     setActiveTab(tab);
     setShowCheckout(false);
+    // Se mudar para qualquer aba que não seja a de pesquisa, limpamos a busca anterior
+    if (tab !== "track") {
+      setSearchQuery("");
+    }
   };
 
 return (
     // Adicionamos pb-safe para o conteúdo não ficar atrás do BottomNav
     <div className="min-h-screen bg-background pb-[calc(6rem+env(safe-area-inset-bottom))]">
       
-      {/* HEADER: Adicionamos pt-safe para afastar o título da barra de status (bateria/relógio) */}
-      <header className="border-b sticky top-0 bg-background z-10 pt-[env(safe-area-inset-top)]">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            {showCheckout ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowCheckout(false)}
-                className="h-10 w-10"
-              >
-                <ArrowLeft className="h-6 w-6" />
-              </Button>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Package className="h-6 w-6" />
-                <h1 className="text-xl font-bold">Loja Tidata</h1>
-              </div>
-            )}
-            {activeTab === "shop" && !showCheckout && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setCartOpen(true)}
-                className="relative h-10 w-10"
-              >
-                <ShoppingCart className="h-6 w-6" />
-                {itemCount > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 text-xs"
-                  >
-                    {itemCount}
-                  </Badge>
-                )}
-              </Button>
-            )}
-          </div>
+      {/* Só renderizamos o Header do pai se o Checkout NÃO estiver aberto */}
+{!showCheckout ? (
+  <header className="border-b sticky top-0 bg-background z-10 pt-[env(safe-area-inset-top)]">
+    <div className="px-4 py-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <img 
+            src="/logo.png" 
+            alt="Logo Tidata" 
+            className="h-12 w-12 object-contain" 
+          />
+          <h1 className="text-2xl font-extrabold tracking-tight">Loja Tidata</h1>
         </div>
-      </header>
-
-      <main className="px-4 pt-2">
-        {activeTab === "shop" ? (
-          showCheckout ? (
-            <Checkout onComplete={() => setShowCheckout(false)} />
-          ) : (
-            <ProductList />
-          )
-        ) : activeTab === "track" ? (
-          <OrderSearch />
-        ) : (
-          <AdminPanel 
-  setActiveTab={handleTabChange} 
-  setSearchQuery={setSearchQuery} // Certifique-se de que setSearchQuery existe aqui no pai também
-/>
+        
+        {activeTab === "shop" && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setCartOpen(true)}
+            className="relative h-12 w-12"
+          >
+            <ShoppingCart className="h-8 w-8" />
+            {itemCount > 0 && (
+              <Badge
+                variant="destructive"
+                className="absolute -top-2 -right-2 h-6 min-w-6 flex items-center justify-center p-0 text-[10px] rounded-full"
+              >
+                {itemCount}
+              </Badge>
+            )}
+          </Button>
         )}
-      </main>
+      </div>
+    </div>
+  </header>
+) : null}
+
+  <main className={showCheckout ? "flex-1" : "px-4 pt-2"}>
+  {activeTab === "shop" ? (
+    showCheckout ? (
+      <Checkout
+        onComplete={() => setShowCheckout(false)} 
+        onBack={() => {
+          setShowCheckout(false); // Fecha o Pagamento
+          setCartOpen(true);      // Abre o Carrinho (Volta pra onde o usuário estava!)
+        }}
+      />
+    ) : (
+      <ProductList />
+    )
+  ) : activeTab === "track" ? (
+    <OrderSearch searchQuery={searchQuery}/>
+  ) : (
+    <AdminPanel 
+      setActiveTab={handleTabChange} 
+      setSearchQuery={setSearchQuery} 
+    />
+  )}
+</main>
 
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
       <CartDrawer

@@ -38,15 +38,24 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
         }`}
       >
         <div className="flex flex-col h-full">
-          {/* TOPO: Safe Area para o Notch */}
-          <div className="flex items-center justify-between p-4 border-b pt-[env(safe-area-inset-top)]">
-            <h2 className="text-xl font-bold">
-              Carrinho {items.length > 0 && `(${items.length})`}
-            </h2>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-6 w-6" />
-            </Button>
-          </div>
+          {/* TOPO PADRONIZADO */}
+<div className="flex items-center justify-between px-4 pb-4 pt-12 border-b bg-background"> 
+  <div className="w-12">
+    <Button variant="ghost" size="icon" onClick={onClose}>
+      <X className="h-7 w-7" />
+    </Button>
+  </div>
+
+  {/* Título com destaque */}
+  <h2 className="text-2xl font-bold text-center flex-1">
+    Carrinho {items.length > 0 && `(${items.length})`}
+  </h2>
+
+  {/* Logo maior (h-10) para destaque */}
+  <div className="w-12 flex justify-end">
+    <img src="/logo.png" alt="Logo" className="h-10 w-10 object-contain" />
+  </div>
+</div>
 
           <div className="flex-1 overflow-y-auto p-4 pb-10">
             {items.length === 0 ? (

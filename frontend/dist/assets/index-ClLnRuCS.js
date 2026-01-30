@@ -205,7 +205,7 @@ function requireReact_production() {
   function isValidElement(object) {
     return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
   }
-  function escape(key) {
+  function escape2(key) {
     var escaperLookup = { "=": "=0", ":": "=2" };
     return "$" + key.replace(/[=:]/g, function(match) {
       return escaperLookup[match];
@@ -213,7 +213,7 @@ function requireReact_production() {
   }
   var userProvidedKeyEscapeRegex = /\/+/g;
   function getElementKey(element, index) {
-    return "object" === typeof element && null !== element && null != element.key ? escape("" + element.key) : index.toString(36);
+    return "object" === typeof element && null !== element && null != element.key ? escape2("" + element.key) : index.toString(36);
   }
   function resolveThenable(thenable) {
     switch (thenable.status) {
@@ -11343,7 +11343,7 @@ function requireReactDomClient_production() {
     r: requestFormReset,
     D: prefetchDNS,
     C: preconnect,
-    L: preload,
+    L: preload2,
     m: preloadModule,
     X: preinitScript,
     S: preinitStyle,
@@ -11375,7 +11375,7 @@ function requireReactDomClient_production() {
     previousDispatcher.C(href, crossOrigin);
     preconnectAs("preconnect", href, crossOrigin);
   }
-  function preload(href, as, options2) {
+  function preload2(href, as, options2) {
     previousDispatcher.L(href, as, options2);
     var ownerDocument = globalDocument;
     if (ownerDocument && href && as) {
@@ -15586,9 +15586,9 @@ function createSlotClone$3(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER$3 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER$4 = Symbol("radix.slottable");
 function isSlottable$3(child) {
-  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$3;
+  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$4;
 }
 function mergeProps$3(slotProps, childProps) {
   const overrideProps = { ...childProps };
@@ -15731,9 +15731,9 @@ function createSlotClone$2(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER$2 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER$3 = Symbol("radix.slottable");
 function isSlottable$2(child) {
-  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$2;
+  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$3;
 }
 function mergeProps$2(slotProps, childProps) {
   const overrideProps = { ...childProps };
@@ -16035,7 +16035,7 @@ var Root$3 = DismissableLayer;
 var Branch = DismissableLayerBranch;
 var useLayoutEffect2 = (globalThis == null ? void 0 : globalThis.document) ? reactExports.useLayoutEffect : () => {
 };
-var PORTAL_NAME$1 = "Portal";
+var PORTAL_NAME$2 = "Portal";
 var Portal$1 = reactExports.forwardRef((props, forwardedRef) => {
   var _a2;
   const { container: containerProp, ...portalProps } = props;
@@ -16044,7 +16044,7 @@ var Portal$1 = reactExports.forwardRef((props, forwardedRef) => {
   const container = containerProp || mounted && ((_a2 = globalThis == null ? void 0 : globalThis.document) == null ? void 0 : _a2.body);
   return container ? ReactDOM.createPortal(/* @__PURE__ */ jsxRuntimeExports.jsx(Primitive$2.div, { ...portalProps, ref: forwardedRef }), container) : null;
 });
-Portal$1.displayName = PORTAL_NAME$1;
+Portal$1.displayName = PORTAL_NAME$2;
 function useStateMachine(initialState, machine) {
   return reactExports.useReducer((state, event) => {
     const nextState = machine[state][event];
@@ -16732,36 +16732,36 @@ var ToastAnnounce = (props) => {
     children
   ] }) }) });
 };
-var TITLE_NAME$1 = "ToastTitle";
+var TITLE_NAME$2 = "ToastTitle";
 var ToastTitle$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeToast, ...titleProps } = props;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive$2.div, { ...titleProps, ref: forwardedRef });
   }
 );
-ToastTitle$1.displayName = TITLE_NAME$1;
-var DESCRIPTION_NAME$1 = "ToastDescription";
+ToastTitle$1.displayName = TITLE_NAME$2;
+var DESCRIPTION_NAME$2 = "ToastDescription";
 var ToastDescription$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeToast, ...descriptionProps } = props;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive$2.div, { ...descriptionProps, ref: forwardedRef });
   }
 );
-ToastDescription$1.displayName = DESCRIPTION_NAME$1;
-var ACTION_NAME = "ToastAction";
+ToastDescription$1.displayName = DESCRIPTION_NAME$2;
+var ACTION_NAME$1 = "ToastAction";
 var ToastAction$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { altText, ...actionProps } = props;
     if (!altText.trim()) {
       console.error(
-        `Invalid prop \`altText\` supplied to \`${ACTION_NAME}\`. Expected non-empty \`string\`.`
+        `Invalid prop \`altText\` supplied to \`${ACTION_NAME$1}\`. Expected non-empty \`string\`.`
       );
       return null;
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ToastAnnounceExclude, { altText, asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ToastClose$1, { ...actionProps, ref: forwardedRef }) });
   }
 );
-ToastAction$1.displayName = ACTION_NAME;
+ToastAction$1.displayName = ACTION_NAME$1;
 var CLOSE_NAME$1 = "ToastClose";
 var ToastClose$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
@@ -16869,10 +16869,10 @@ function focusFirst$1(candidates) {
 }
 var Provider = ToastProvider$1;
 var Viewport = ToastViewport$1;
-var Root2 = Toast$1;
+var Root2$1 = Toast$1;
 var Title$1 = ToastTitle$1;
-var Description = ToastDescription$1;
-var Action = ToastAction$1;
+var Description$1 = ToastDescription$1;
+var Action$1 = ToastAction$1;
 var Close$1 = ToastClose$1;
 function r(e) {
   var t, f, n = "";
@@ -16928,25 +16928,43 @@ const cva = (base, config) => (props) => {
   return cx(base, getVariantClassNames, getCompoundVariantClassNames, props === null || props === void 0 ? void 0 : props.class, props === null || props === void 0 ? void 0 : props.className);
 };
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+}).join(" ").trim();
+/**
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
 const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+/**
+ * @license lucide-react v0.563.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const toCamelCase = (string) => string.replace(
   /^([A-Z])|[\s-_]+(\w)/g,
   (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
 );
+/**
+ * @license lucide-react v0.563.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
 const toPascalCase = (string) => {
   const camelCase = toCamelCase(string);
   return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
 };
-const mergeClasses = (...classes) => classes.filter((className, index, array) => {
-  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
-}).join(" ").trim();
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -16963,7 +16981,21 @@ var defaultAttributes = {
   strokeLinejoin: "round"
 };
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const hasA11yProp = (props) => {
+  for (const prop in props) {
+    if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+      return true;
+    }
+  }
+  return false;
+};
+/**
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -16978,28 +17010,27 @@ const Icon = reactExports.forwardRef(
     children,
     iconNode,
     ...rest
-  }, ref) => {
-    return reactExports.createElement(
-      "svg",
-      {
-        ref,
-        ...defaultAttributes,
-        width: size,
-        height: size,
-        stroke: color,
-        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
-        className: mergeClasses("lucide", className),
-        ...rest
-      },
-      [
-        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
-        ...Array.isArray(children) ? children : [children]
-      ]
-    );
-  }
+  }, ref) => reactExports.createElement(
+    "svg",
+    {
+      ref,
+      ...defaultAttributes,
+      width: size,
+      height: size,
+      stroke: color,
+      strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+      className: mergeClasses("lucide", className),
+      ...!children && !hasA11yProp(rest) && { "aria-hidden": "true" },
+      ...rest
+    },
+    [
+      ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
+      ...Array.isArray(children) ? children : [children]
+    ]
+  )
 );
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17021,7 +17052,7 @@ const createLucideIcon = (iconName, iconNode) => {
   return Component;
 };
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17032,7 +17063,7 @@ const __iconNode$c = [
 ];
 const ArrowLeft = createLucideIcon("arrow-left", __iconNode$c);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17043,7 +17074,7 @@ const __iconNode$b = [
 ];
 const CircleCheck = createLucideIcon("circle-check", __iconNode$b);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17056,7 +17087,7 @@ const __iconNode$a = [
 ];
 const LayoutDashboard = createLucideIcon("layout-dashboard", __iconNode$a);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17064,7 +17095,7 @@ const LayoutDashboard = createLucideIcon("layout-dashboard", __iconNode$a);
 const __iconNode$9 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
 const LoaderCircle = createLucideIcon("loader-circle", __iconNode$9);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17072,7 +17103,7 @@ const LoaderCircle = createLucideIcon("loader-circle", __iconNode$9);
 const __iconNode$8 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
 const Minus = createLucideIcon("minus", __iconNode$8);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17091,7 +17122,7 @@ const __iconNode$7 = [
 ];
 const Package = createLucideIcon("package", __iconNode$7);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17108,7 +17139,7 @@ const __iconNode$6 = [
 ];
 const Pencil = createLucideIcon("pencil", __iconNode$6);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17119,30 +17150,36 @@ const __iconNode$5 = [
 ];
 const Plus = createLucideIcon("plus", __iconNode$5);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$4 = [
-  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }],
-  ["path", { d: "m21 21-4.3-4.3", key: "1qie3q" }]
+  ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
+  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
 ];
 const Search = createLucideIcon("search", __iconNode$4);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$3 = [
-  ["path", { d: "M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z", key: "hou9p0" }],
-  ["path", { d: "M3 6h18", key: "d0wm0j" }],
-  ["path", { d: "M16 10a4 4 0 0 1-8 0", key: "1ltviw" }]
+  ["path", { d: "M16 10a4 4 0 0 1-8 0", key: "1ltviw" }],
+  ["path", { d: "M3.103 6.034h17.794", key: "awc11p" }],
+  [
+    "path",
+    {
+      d: "M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z",
+      key: "o988cm"
+    }
+  ]
 ];
 const ShoppingBag = createLucideIcon("shopping-bag", __iconNode$3);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -17160,21 +17197,21 @@ const __iconNode$2 = [
 ];
 const ShoppingCart = createLucideIcon("shopping-cart", __iconNode$2);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$1 = [
+  ["path", { d: "M10 11v6", key: "nco0om" }],
+  ["path", { d: "M14 11v6", key: "outv1u" }],
+  ["path", { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6", key: "miytrc" }],
   ["path", { d: "M3 6h18", key: "d0wm0j" }],
-  ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
-  ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
-  ["line", { x1: "10", x2: "10", y1: "11", y2: "17", key: "1uufr5" }],
-  ["line", { x1: "14", x2: "14", y1: "11", y2: "17", key: "xtxkd" }]
+  ["path", { d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2", key: "e791ji" }]
 ];
 const Trash2 = createLucideIcon("trash-2", __iconNode$1);
 /**
- * @license lucide-react v0.484.0 - ISC
+ * @license lucide-react v0.563.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
@@ -20224,7 +20261,7 @@ const toastVariants = cva(
 );
 const Toast = reactExports.forwardRef(({ className, variant, ...props }, ref) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Root2,
+    Root2$1,
     {
       ref,
       className: cn(toastVariants({ variant }), className),
@@ -20232,9 +20269,9 @@ const Toast = reactExports.forwardRef(({ className, variant, ...props }, ref) =>
     }
   );
 });
-Toast.displayName = Root2.displayName;
+Toast.displayName = Root2$1.displayName;
 const ToastAction = reactExports.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  Action,
+  Action$1,
   {
     ref,
     className: cn(
@@ -20244,7 +20281,7 @@ const ToastAction = reactExports.forwardRef(({ className, ...props }, ref) => /*
     ...props
   }
 ));
-ToastAction.displayName = Action.displayName;
+ToastAction.displayName = Action$1.displayName;
 const ToastClose = reactExports.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
   Close$1,
   {
@@ -20269,14 +20306,14 @@ const ToastTitle = reactExports.forwardRef(({ className, ...props }, ref) => /* 
 ));
 ToastTitle.displayName = Title$1.displayName;
 const ToastDescription = reactExports.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  Description,
+  Description$1,
   {
     ref,
     className: cn("text-sm opacity-90", className),
     ...props
   }
 ));
-ToastDescription.displayName = Description.displayName;
+ToastDescription.displayName = Description$1.displayName;
 function Toaster() {
   const { toasts } = useToast();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(ToastProvider, { children: [
@@ -20290,7 +20327,12 @@ function Toaster() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(ToastClose, {})
       ] }, id);
     }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ToastViewport, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ToastViewport,
+      {
+        className: "pointer-events-none"
+      }
+    )
   ] });
 }
 const CartContext = reactExports.createContext(void 0);
@@ -20815,9 +20857,9 @@ function createSlotClone$1(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER$1 = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER$2 = Symbol("radix.slottable");
 function isSlottable$1(child) {
-  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$1;
+  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$2;
 }
 function mergeProps$1(slotProps, childProps) {
   const overrideProps = { ...childProps };
@@ -20871,9 +20913,11 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
+        xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
+        "icon-xs": "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
         "icon-sm": "size-8",
         "icon-lg": "size-10"
       }
@@ -21010,7 +21054,8 @@ function ProductCard({ product: product2 }) {
         title: "Fora de estoque!",
         description: "Este produto está indisponível temporariamente.",
         variant: "destructive",
-        duration: 3e3
+        duration: 2500,
+        className: "pointer-events-none touch-none"
       });
       return;
     }
@@ -21018,7 +21063,8 @@ function ProductCard({ product: product2 }) {
     toast2({
       title: "Adicionado ao carrinho",
       description: `${product2.name} foi adicionado ao seu carrinho.`,
-      duration: 3e3
+      duration: 2500,
+      className: "pointer-events-none touch-none"
     });
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "overflow-hidden transition-all active:scale-[0.98]", children: [
@@ -21246,7 +21292,10 @@ function Separator({
     }
   );
 }
-function Checkout({ onComplete }) {
+function Checkout({ onComplete, onBack }) {
+  reactExports.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { items, clearCart } = useCart();
   const { toast: toast2 } = useToast();
   const [customerName, setCustomerName] = reactExports.useState("");
@@ -21272,14 +21321,15 @@ function Checkout({ onComplete }) {
       toast2({
         title: "Pedido finalizado!",
         description: `Pedido ${data.orderNumber} foi bem sucedido.`,
-        duration: 3e3
+        duration: 3e3,
+        className: "pointer-events-none select-none"
+        // Trava para não bugar ao tocar
       });
     },
     onError: (error) => {
-      console.error("Criação de pedido falhou:", error);
       toast2({
         title: "Falha no pedido",
-        description: error instanceof Error ? error.message : "Falha em processar pedido, tente novamente mais tarde.",
+        description: error instanceof Error ? error.message : "Falha em processar pedido.",
         variant: "destructive",
         duration: 3e3
       });
@@ -21290,91 +21340,77 @@ function Checkout({ onComplete }) {
     placeOrder();
   };
   if (orderPlaced) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "text-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-10 w-10 text-green-600" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-2xl", children: "Pedido Confirmado!" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardDescription, { className: "space-y-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-lg font-semibold text-foreground mt-2", children: [
-            "Número do pedido: ",
-            orderNumber
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-            "Obrigado por sua compra. Um email de confirmação foi enviado para ",
-            customerEmail
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "Salve o número deste pedido para fins de rastrear seu pacote." })
-        ] })
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex flex-col bg-background overflow-hidden", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "flex items-center justify-between px-4 pb-4 pt-12 border-b w-full bg-background", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12" }),
+        " ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold text-center flex-1", children: "Pagamento" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12 flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: "/logo.png", alt: "Logo", className: "h-10 w-10 object-contain" }) })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { className: "justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: onComplete, children: "Continuar compras" }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 flex items-center justify-center p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "w-full border-none shadow-none bg-transparent animate-in fade-in zoom-in duration-300", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "text-center p-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100/80", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-12 w-12 text-green-600" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-3xl font-bold tracking-tight", children: "Pedido Confirmado!" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6 pt-6", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-muted/50 p-6 rounded-2xl border border-border/50", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold mb-2", children: "Número do Pedido" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg font-mono font-bold text-foreground break-all", children: orderNumber })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground text-sm px-4", children: [
+              "Enviamos os detalhes para ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-foreground", children: customerEmail })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { className: "justify-center pt-10", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: onComplete, className: "w-full max-w-[240px] h-14 text-lg font-bold rounded-2xl", children: "Continuar compras" }) })
+      ] }) })
     ] });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: "Finalizar" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Finalize sua compra" })
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex flex-col bg-background overflow-hidden", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "flex items-center justify-between px-4 pb-4 pt-12 border-b border-border/100 w-full bg-background shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "ghost", size: "icon", onClick: onBack, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { className: "h-7 w-7" }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold text-center flex-1", children: "Pagamento" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12 flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: "/logo.png", alt: "Logo", className: "h-10 w-10 object-contain" }) })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-6", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto overflow-x-hidden pt-2 pb-6 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "border-none shadow-none bg-transparent", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "space-y-4 px-0", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "name", children: "Nome" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Input,
-              {
-                id: "name",
-                value: customerName,
-                onChange: (e) => setCustomerName(e.target.value),
-                required: true,
-                placeholder: "Ana Maria"
-              }
-            )
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Input, { id: "name", value: customerName, onChange: (e) => setCustomerName(e.target.value), required: true, placeholder: "Ana Maria" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "email", children: "Email" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Input,
-              {
-                id: "email",
-                type: "email",
-                value: customerEmail,
-                onChange: (e) => setCustomerEmail(e.target.value),
-                required: true,
-                placeholder: "ana_mar@exemplo.com"
-              }
-            )
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Input, { id: "email", type: "email", value: customerEmail, onChange: (e) => setCustomerEmail(e.target.value), required: true, placeholder: "ana@exemplo.com" })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold", children: "Resumo do pedido" }),
-          items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-sm", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-lg", children: "Resumo do pedido" }),
+          items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start text-sm py-1 gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex-1 leading-tight", children: [
               item.product.name,
               " × ",
               item.quantity
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-medium whitespace-nowrap shrink-0", children: [
               "R$ ",
               (item.product.price * item.quantity).toFixed(2)
             ] })
           ] }, item.product.id)),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between font-bold text-lg", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between font-bold text-xl pt-2", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Total" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-primary", children: [
               "R$ ",
               total.toFixed(2)
             ] })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Separator, {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { type: "submit", className: "w-full", size: "lg", disabled: isPending, children: [
-        isPending && /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "mr-2 h-4 w-4 animate-spin" }),
-        isPending ? "Processando..." : "Fazer pedido"
-      ] }) })
-    ] })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { className: "pt-4 pb-2 px-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "submit", className: "w-full h-16 text-xl font-bold rounded-2xl shadow-lg", disabled: isPending, children: isPending ? "Processando..." : "Fazer pedido" }) })
+    ] }) }) })
   ] });
 }
 var useReactId = React$1[" useId ".trim().toString()] || (() => void 0);
@@ -22431,9 +22467,9 @@ function createSlotClone(ownerName) {
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
 }
-var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+var SLOTTABLE_IDENTIFIER$1 = Symbol("radix.slottable");
 function isSlottable(child) {
-  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$1;
 }
 function mergeProps(slotProps, childProps) {
   const overrideProps = { ...childProps };
@@ -22474,7 +22510,7 @@ function getElementRef(element) {
   return element.props.ref || element.ref;
 }
 var DIALOG_NAME = "Dialog";
-var [createDialogContext] = createContextScope(DIALOG_NAME);
+var [createDialogContext, createDialogScope] = createContextScope(DIALOG_NAME);
 var [DialogProvider, useDialogContext] = createDialogContext(DIALOG_NAME);
 var Dialog$1 = (props) => {
   const {
@@ -22511,11 +22547,11 @@ var Dialog$1 = (props) => {
   );
 };
 Dialog$1.displayName = DIALOG_NAME;
-var TRIGGER_NAME = "DialogTrigger";
+var TRIGGER_NAME$1 = "DialogTrigger";
 var DialogTrigger$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeDialog, ...triggerProps } = props;
-    const context = useDialogContext(TRIGGER_NAME, __scopeDialog);
+    const context = useDialogContext(TRIGGER_NAME$1, __scopeDialog);
     const composedTriggerRef = useComposedRefs(forwardedRef, context.triggerRef);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       Primitive$2.button,
@@ -22532,32 +22568,32 @@ var DialogTrigger$1 = reactExports.forwardRef(
     );
   }
 );
-DialogTrigger$1.displayName = TRIGGER_NAME;
-var PORTAL_NAME = "DialogPortal";
-var [PortalProvider, usePortalContext] = createDialogContext(PORTAL_NAME, {
+DialogTrigger$1.displayName = TRIGGER_NAME$1;
+var PORTAL_NAME$1 = "DialogPortal";
+var [PortalProvider, usePortalContext] = createDialogContext(PORTAL_NAME$1, {
   forceMount: void 0
 });
 var DialogPortal$1 = (props) => {
   const { __scopeDialog, forceMount, children, container } = props;
-  const context = useDialogContext(PORTAL_NAME, __scopeDialog);
+  const context = useDialogContext(PORTAL_NAME$1, __scopeDialog);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(PortalProvider, { scope: __scopeDialog, forceMount, children: reactExports.Children.map(children, (child) => /* @__PURE__ */ jsxRuntimeExports.jsx(Presence, { present: forceMount || context.open, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Portal$1, { asChild: true, container, children: child }) })) });
 };
-DialogPortal$1.displayName = PORTAL_NAME;
-var OVERLAY_NAME = "DialogOverlay";
+DialogPortal$1.displayName = PORTAL_NAME$1;
+var OVERLAY_NAME$1 = "DialogOverlay";
 var DialogOverlay$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const portalContext = usePortalContext(OVERLAY_NAME, props.__scopeDialog);
+    const portalContext = usePortalContext(OVERLAY_NAME$1, props.__scopeDialog);
     const { forceMount = portalContext.forceMount, ...overlayProps } = props;
-    const context = useDialogContext(OVERLAY_NAME, props.__scopeDialog);
+    const context = useDialogContext(OVERLAY_NAME$1, props.__scopeDialog);
     return context.modal ? /* @__PURE__ */ jsxRuntimeExports.jsx(Presence, { present: forceMount || context.open, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogOverlayImpl, { ...overlayProps, ref: forwardedRef }) }) : null;
   }
 );
-DialogOverlay$1.displayName = OVERLAY_NAME;
+DialogOverlay$1.displayName = OVERLAY_NAME$1;
 var Slot = /* @__PURE__ */ createSlot("DialogOverlay.RemoveScroll");
 var DialogOverlayImpl = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeDialog, ...overlayProps } = props;
-    const context = useDialogContext(OVERLAY_NAME, __scopeDialog);
+    const context = useDialogContext(OVERLAY_NAME$1, __scopeDialog);
     return (
       // Make sure `Content` is scrollable even when it doesn't live inside `RemoveScroll`
       // ie. when `Overlay` and `Content` are siblings
@@ -22573,19 +22609,19 @@ var DialogOverlayImpl = reactExports.forwardRef(
     );
   }
 );
-var CONTENT_NAME = "DialogContent";
+var CONTENT_NAME$1 = "DialogContent";
 var DialogContent$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const portalContext = usePortalContext(CONTENT_NAME, props.__scopeDialog);
+    const portalContext = usePortalContext(CONTENT_NAME$1, props.__scopeDialog);
     const { forceMount = portalContext.forceMount, ...contentProps } = props;
-    const context = useDialogContext(CONTENT_NAME, props.__scopeDialog);
+    const context = useDialogContext(CONTENT_NAME$1, props.__scopeDialog);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Presence, { present: forceMount || context.open, children: context.modal ? /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContentModal, { ...contentProps, ref: forwardedRef }) : /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContentNonModal, { ...contentProps, ref: forwardedRef }) });
   }
 );
-DialogContent$1.displayName = CONTENT_NAME;
+DialogContent$1.displayName = CONTENT_NAME$1;
 var DialogContentModal = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const context = useDialogContext(CONTENT_NAME, props.__scopeDialog);
+    const context = useDialogContext(CONTENT_NAME$1, props.__scopeDialog);
     const contentRef = reactExports.useRef(null);
     const composedRefs = useComposedRefs(forwardedRef, context.contentRef, contentRef);
     reactExports.useEffect(() => {
@@ -22620,7 +22656,7 @@ var DialogContentModal = reactExports.forwardRef(
 );
 var DialogContentNonModal = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const context = useDialogContext(CONTENT_NAME, props.__scopeDialog);
+    const context = useDialogContext(CONTENT_NAME$1, props.__scopeDialog);
     const hasInteractedOutsideRef = reactExports.useRef(false);
     const hasPointerDownOutsideRef = reactExports.useRef(false);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -22663,7 +22699,7 @@ var DialogContentNonModal = reactExports.forwardRef(
 var DialogContentImpl = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeDialog, trapFocus, onOpenAutoFocus, onCloseAutoFocus, ...contentProps } = props;
-    const context = useDialogContext(CONTENT_NAME, __scopeDialog);
+    const context = useDialogContext(CONTENT_NAME$1, __scopeDialog);
     const contentRef = reactExports.useRef(null);
     const composedRefs = useComposedRefs(forwardedRef, contentRef);
     useFocusGuards();
@@ -22693,29 +22729,29 @@ var DialogContentImpl = reactExports.forwardRef(
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(TitleWarning, { titleId: context.titleId }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DescriptionWarning, { contentRef, descriptionId: context.descriptionId })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DescriptionWarning$1, { contentRef, descriptionId: context.descriptionId })
       ] })
     ] });
   }
 );
-var TITLE_NAME = "DialogTitle";
+var TITLE_NAME$1 = "DialogTitle";
 var DialogTitle$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeDialog, ...titleProps } = props;
-    const context = useDialogContext(TITLE_NAME, __scopeDialog);
+    const context = useDialogContext(TITLE_NAME$1, __scopeDialog);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive$2.h2, { id: context.titleId, ...titleProps, ref: forwardedRef });
   }
 );
-DialogTitle$1.displayName = TITLE_NAME;
-var DESCRIPTION_NAME = "DialogDescription";
+DialogTitle$1.displayName = TITLE_NAME$1;
+var DESCRIPTION_NAME$1 = "DialogDescription";
 var DialogDescription = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeDialog, ...descriptionProps } = props;
-    const context = useDialogContext(DESCRIPTION_NAME, __scopeDialog);
+    const context = useDialogContext(DESCRIPTION_NAME$1, __scopeDialog);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive$2.p, { id: context.descriptionId, ...descriptionProps, ref: forwardedRef });
   }
 );
-DialogDescription.displayName = DESCRIPTION_NAME;
+DialogDescription.displayName = DESCRIPTION_NAME$1;
 var CLOSE_NAME = "DialogClose";
 var DialogClose = reactExports.forwardRef(
   (props, forwardedRef) => {
@@ -22738,8 +22774,8 @@ function getState(open) {
 }
 var TITLE_WARNING_NAME = "DialogTitleWarning";
 var [WarningProvider, useWarningContext] = createContext2(TITLE_WARNING_NAME, {
-  contentName: CONTENT_NAME,
-  titleName: TITLE_NAME,
+  contentName: CONTENT_NAME$1,
+  titleName: TITLE_NAME$1,
   docsSlug: "dialog"
 });
 var TitleWarning = ({ titleId }) => {
@@ -22758,7 +22794,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   return null;
 };
 var DESCRIPTION_WARNING_NAME = "DialogDescriptionWarning";
-var DescriptionWarning = ({ contentRef, descriptionId }) => {
+var DescriptionWarning$1 = ({ contentRef, descriptionId }) => {
   const descriptionWarningContext = useWarningContext(DESCRIPTION_WARNING_NAME);
   const MESSAGE = `Warning: Missing \`Description\` or \`aria-describedby={undefined}\` for {${descriptionWarningContext.contentName}}.`;
   reactExports.useEffect(() => {
@@ -22777,6 +22813,7 @@ var Portal = DialogPortal$1;
 var Overlay = DialogOverlay$1;
 var Content = DialogContent$1;
 var Title = DialogTitle$1;
+var Description = DialogDescription;
 var Close = DialogClose;
 function Dialog({
   ...props
@@ -22880,11 +22917,306 @@ function Textarea({ className, ...props }) {
     }
   );
 }
-function AdminPanel() {
+var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+// @__NO_SIDE_EFFECTS__
+function createSlottable(ownerName) {
+  const Slottable2 = ({ children }) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children });
+  };
+  Slottable2.displayName = `${ownerName}.Slottable`;
+  Slottable2.__radixId = SLOTTABLE_IDENTIFIER;
+  return Slottable2;
+}
+var ROOT_NAME = "AlertDialog";
+var [createAlertDialogContext] = createContextScope(ROOT_NAME, [
+  createDialogScope
+]);
+var useDialogScope = createDialogScope();
+var AlertDialog$1 = (props) => {
+  const { __scopeAlertDialog, ...alertDialogProps } = props;
+  const dialogScope = useDialogScope(__scopeAlertDialog);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, { ...dialogScope, ...alertDialogProps, modal: true });
+};
+AlertDialog$1.displayName = ROOT_NAME;
+var TRIGGER_NAME = "AlertDialogTrigger";
+var AlertDialogTrigger$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeAlertDialog, ...triggerProps } = props;
+    const dialogScope = useDialogScope(__scopeAlertDialog);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Trigger, { ...dialogScope, ...triggerProps, ref: forwardedRef });
+  }
+);
+AlertDialogTrigger$1.displayName = TRIGGER_NAME;
+var PORTAL_NAME = "AlertDialogPortal";
+var AlertDialogPortal$1 = (props) => {
+  const { __scopeAlertDialog, ...portalProps } = props;
+  const dialogScope = useDialogScope(__scopeAlertDialog);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, { ...dialogScope, ...portalProps });
+};
+AlertDialogPortal$1.displayName = PORTAL_NAME;
+var OVERLAY_NAME = "AlertDialogOverlay";
+var AlertDialogOverlay$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeAlertDialog, ...overlayProps } = props;
+    const dialogScope = useDialogScope(__scopeAlertDialog);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Overlay, { ...dialogScope, ...overlayProps, ref: forwardedRef });
+  }
+);
+AlertDialogOverlay$1.displayName = OVERLAY_NAME;
+var CONTENT_NAME = "AlertDialogContent";
+var [AlertDialogContentProvider, useAlertDialogContentContext] = createAlertDialogContext(CONTENT_NAME);
+var Slottable = /* @__PURE__ */ createSlottable("AlertDialogContent");
+var AlertDialogContent$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeAlertDialog, children, ...contentProps } = props;
+    const dialogScope = useDialogScope(__scopeAlertDialog);
+    const contentRef = reactExports.useRef(null);
+    const composedRefs = useComposedRefs(forwardedRef, contentRef);
+    const cancelRef = reactExports.useRef(null);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      WarningProvider,
+      {
+        contentName: CONTENT_NAME,
+        titleName: TITLE_NAME,
+        docsSlug: "alert-dialog",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogContentProvider, { scope: __scopeAlertDialog, cancelRef, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Content,
+          {
+            role: "alertdialog",
+            ...dialogScope,
+            ...contentProps,
+            ref: composedRefs,
+            onOpenAutoFocus: composeEventHandlers(contentProps.onOpenAutoFocus, (event) => {
+              var _a2;
+              event.preventDefault();
+              (_a2 = cancelRef.current) == null ? void 0 : _a2.focus({ preventScroll: true });
+            }),
+            onPointerDownOutside: (event) => event.preventDefault(),
+            onInteractOutside: (event) => event.preventDefault(),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Slottable, { children }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(DescriptionWarning, { contentRef })
+            ]
+          }
+        ) })
+      }
+    );
+  }
+);
+AlertDialogContent$1.displayName = CONTENT_NAME;
+var TITLE_NAME = "AlertDialogTitle";
+var AlertDialogTitle$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeAlertDialog, ...titleProps } = props;
+    const dialogScope = useDialogScope(__scopeAlertDialog);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Title, { ...dialogScope, ...titleProps, ref: forwardedRef });
+  }
+);
+AlertDialogTitle$1.displayName = TITLE_NAME;
+var DESCRIPTION_NAME = "AlertDialogDescription";
+var AlertDialogDescription$1 = reactExports.forwardRef((props, forwardedRef) => {
+  const { __scopeAlertDialog, ...descriptionProps } = props;
+  const dialogScope = useDialogScope(__scopeAlertDialog);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Description, { ...dialogScope, ...descriptionProps, ref: forwardedRef });
+});
+AlertDialogDescription$1.displayName = DESCRIPTION_NAME;
+var ACTION_NAME = "AlertDialogAction";
+var AlertDialogAction$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeAlertDialog, ...actionProps } = props;
+    const dialogScope = useDialogScope(__scopeAlertDialog);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Close, { ...dialogScope, ...actionProps, ref: forwardedRef });
+  }
+);
+AlertDialogAction$1.displayName = ACTION_NAME;
+var CANCEL_NAME = "AlertDialogCancel";
+var AlertDialogCancel$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeAlertDialog, ...cancelProps } = props;
+    const { cancelRef } = useAlertDialogContentContext(CANCEL_NAME, __scopeAlertDialog);
+    const dialogScope = useDialogScope(__scopeAlertDialog);
+    const ref = useComposedRefs(forwardedRef, cancelRef);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Close, { ...dialogScope, ...cancelProps, ref });
+  }
+);
+AlertDialogCancel$1.displayName = CANCEL_NAME;
+var DescriptionWarning = ({ contentRef }) => {
+  const MESSAGE = `\`${CONTENT_NAME}\` requires a description for the component to be accessible for screen reader users.
+
+You can add a description to the \`${CONTENT_NAME}\` by passing a \`${DESCRIPTION_NAME}\` component as a child, which also benefits sighted users by adding visible context to the dialog.
+
+Alternatively, you can use your own component as a description by assigning it an \`id\` and passing the same value to the \`aria-describedby\` prop in \`${CONTENT_NAME}\`. If the description is confusing or duplicative for sighted users, you can use the \`@radix-ui/react-visually-hidden\` primitive as a wrapper around your description component.
+
+For more information, see https://radix-ui.com/primitives/docs/components/alert-dialog`;
+  reactExports.useEffect(() => {
+    var _a2;
+    const hasDescription = document.getElementById(
+      (_a2 = contentRef.current) == null ? void 0 : _a2.getAttribute("aria-describedby")
+    );
+    if (!hasDescription) console.warn(MESSAGE);
+  }, [MESSAGE, contentRef]);
+  return null;
+};
+var Root2 = AlertDialog$1;
+var Trigger2 = AlertDialogTrigger$1;
+var Portal2 = AlertDialogPortal$1;
+var Overlay2 = AlertDialogOverlay$1;
+var Content2 = AlertDialogContent$1;
+var Action = AlertDialogAction$1;
+var Cancel = AlertDialogCancel$1;
+var Title2 = AlertDialogTitle$1;
+var Description2 = AlertDialogDescription$1;
+function AlertDialog({
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Root2, { "data-slot": "alert-dialog", ...props });
+}
+function AlertDialogTrigger({
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Trigger2, { "data-slot": "alert-dialog-trigger", ...props });
+}
+function AlertDialogPortal({
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal2, { "data-slot": "alert-dialog-portal", ...props });
+}
+function AlertDialogOverlay({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Overlay2,
+    {
+      "data-slot": "alert-dialog-overlay",
+      className: cn(
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function AlertDialogContent({
+  className,
+  size = "default",
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogPortal, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogOverlay, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Content2,
+      {
+        "data-slot": "alert-dialog-content",
+        "data-size": size,
+        className: cn(
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 group/alert-dialog-content fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-lg",
+          className
+        ),
+        ...props
+      }
+    )
+  ] });
+}
+function AlertDialogHeader({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "alert-dialog-header",
+      className: cn(
+        "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-6 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function AlertDialogFooter({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      "data-slot": "alert-dialog-footer",
+      className: cn(
+        "flex flex-col-reverse gap-2 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function AlertDialogTitle({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Title2,
+    {
+      "data-slot": "alert-dialog-title",
+      className: cn(
+        "text-lg font-semibold sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function AlertDialogDescription({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Description2,
+    {
+      "data-slot": "alert-dialog-description",
+      className: cn("text-muted-foreground text-sm", className),
+      ...props
+    }
+  );
+}
+function AlertDialogAction({
+  className,
+  variant = "default",
+  size = "default",
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant, size, asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Action,
+    {
+      "data-slot": "alert-dialog-action",
+      className: cn(className),
+      ...props
+    }
+  ) });
+}
+function AlertDialogCancel({
+  className,
+  variant = "outline",
+  size = "default",
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant, size, asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Cancel,
+    {
+      "data-slot": "alert-dialog-cancel",
+      className: cn(className),
+      ...props
+    }
+  ) });
+}
+function AdminPanel({ setActiveTab, setSearchQuery }) {
   const { toast: toast2 } = useToast();
   const queryClient2 = useQueryClient();
   const [isDialogOpen, setIsDialogOpen] = reactExports.useState(false);
   const [editingProduct, setEditingProduct] = reactExports.useState(null);
+  const [countdown, setCountdown] = reactExports.useState(0);
+  const [expandedOrder, setExpandedOrder] = reactExports.useState(null);
+  const [adminSearchTerm, setAdminSearchTerm] = reactExports.useState("");
   const { data: productsData, isLoading: isLoadingProducts } = useQuery({
     queryKey: ["products"],
     queryFn: () => backend.product.list()
@@ -23045,9 +23377,9 @@ function AdminPanel() {
           return a.stockQuantity - b.stockQuantity;
         }).map((product2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "overflow-hidden", children: [
           " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "p-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
             " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-14 h-14 rounded bg-muted flex items-center justify-center shrink-0", children: product2.imageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded bg-muted shrink-0", children: product2.imageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               "img",
               {
                 src: product2.imageUrl,
@@ -23056,20 +23388,20 @@ function AdminPanel() {
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-6 w-6 text-muted-foreground" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-sm truncate", children: product2.name }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground line-clamp-2 break-words leading-tight", children: product2.description || "Sem descrição" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-x-3 gap-y-1 mt-1", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-sm", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-bold text-xs truncate leading-none mb-1", children: product2.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground line-clamp-1 break-words", children: product2.description || "Sem descrição" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-xs text-foreground", children: [
                   "R$ ",
                   product2.price.toFixed(2)
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: `text-[10px] font-bold uppercase ${product2.stockQuantity <= 5 ? "text-red-600" : "text-muted-foreground"}`, children: [
-                  "Est: ",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: `text-[11px] font-bold ${product2.stockQuantity <= 5 ? "text-red-600" : "text-muted-foreground"}`, children: [
+                  "QTD: ",
                   product2.stockQuantity
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-1 shrink-0 ml-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-1 shrink-0 ml-1", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Button,
                 {
@@ -23083,17 +23415,44 @@ function AdminPanel() {
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx(Pencil, { className: "h-3.5 w-3.5" })
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Button,
-                {
-                  variant: "outline",
-                  size: "icon",
-                  className: "h-8 w-8 text-destructive",
-                  onClick: () => deleteMutation.mutate(product2.id),
-                  disabled: deleteMutation.isPending,
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-3.5 w-3.5" })
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialog, { onOpenChange: (open) => {
+                if (open) {
+                  setCountdown(3);
+                  const timer = setInterval(() => {
+                    setCountdown((prev) => {
+                      if (prev <= 1) {
+                        clearInterval(timer);
+                        return 0;
+                      }
+                      return prev - 1;
+                    });
+                  }, 1e3);
                 }
-              )
+              }, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", size: "icon", className: "h-7 w-7 text-destructive", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-3.5 w-3.5" }) }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogContent, { className: "w-[90%] rounded-lg", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogHeader, { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogTitle, { children: "Excluir produto?" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogDescription, { children: [
+                      "Tem certeza que deseja remover ",
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: product2.name }),
+                      "?"
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogFooter, { className: "flex-col gap-2 sm:flex-row", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogCancel, { children: "Cancelar" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      AlertDialogAction,
+                      {
+                        disabled: countdown > 0 || deleteMutation.isPending,
+                        onClick: () => deleteMutation.mutate(product2.id),
+                        className: "bg-red-600 text-white font-bold hover:bg-red-700 disabled:opacity-50",
+                        children: countdown > 0 ? `Aguarde (${countdown}s)` : "EXCLUIR"
+                      }
+                    )
+                  ] })
+                ] })
+              ] })
             ] })
           ] }) })
         ] }, product2.id))
@@ -23101,43 +23460,60 @@ function AdminPanel() {
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold mb-6", children: "Pedidos recentes" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-4 w-full", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-2 w-full", children: [
         " ",
-        ordersData == null ? void 0 : ordersData.orders.map((order2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "overflow-hidden", children: [
-          " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "p-4", children: [
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-2", children: [
-              " ",
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
-                " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-base truncate", children: order2.orderNumber }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1 truncate", children: order2.customerName }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground truncate italic", children: order2.customerEmail })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0", children: [
-                " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "font-bold text-base", children: [
-                  "R$ ",
-                  order2.total.toFixed(2)
+        ordersData == null ? void 0 : ordersData.orders.map((order2) => {
+          const isExpanded = expandedOrder === order2.id;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Card,
+            {
+              className: "overflow-hidden cursor-pointer border-border/50 shadow-none bg-white",
+              onClick: () => setExpandedOrder(isExpanded ? null : order2.id),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-2.5 flex items-center justify-between gap-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[13px] font-bold block leading-tight truncate", children: order2.orderNumber }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] text-muted-foreground block truncate", children: order2.customerName })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right shrink-0 leading-tight", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "font-bold text-[13px]", children: [
+                      "R$ ",
+                      order2.total.toFixed(2)
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[9px] text-muted-foreground", children: new Date(order2.createdAt).toLocaleDateString() })
+                  ] })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground", children: new Date(order2.createdAt).toLocaleDateString() })
-              ] })
-            ] })
-          ] })
-        ] }, order2.id))
+                isExpanded && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-2.5 pb-2.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-t border-dashed pt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  Button,
+                  {
+                    size: "sm",
+                    variant: "secondary",
+                    className: "w-full h-8 text-[10px] font-bold tracking-tight bg-slate-100",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      setActiveTab("track");
+                      setSearchQuery(order2.orderNumber);
+                      window.scrollTo(0, 0);
+                    },
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { className: "h-3 w-3 mr-1" }),
+                      "PESQUISAR ESSE PEDIDO"
+                    ]
+                  }
+                ) }) })
+              ]
+            },
+            order2.id
+          );
+        })
       ] })
     ] })
   ] });
 }
-function OrderSearch() {
+function OrderSearch({ searchQuery }) {
   const { toast: toast2 } = useToast();
   const [orderNumber, setOrderNumber] = reactExports.useState("");
   const [order2, setOrder] = reactExports.useState(null);
-  const { data: ordersData, isLoading: isLoadingOrders } = useQuery({
-    queryKey: ["orders"],
-    queryFn: () => backend.order.list()
-  });
   const { mutate: searchOrder, isPending } = useMutation({
     mutationFn: async (orderNum) => {
       return backend.order.search({ orderNumber: orderNum });
@@ -23155,15 +23531,27 @@ function OrderSearch() {
       });
     }
   });
+  reactExports.useEffect(() => {
+    if (searchQuery) {
+      setOrderNumber(searchQuery);
+      searchOrder(searchQuery);
+    }
+  }, [searchQuery, searchOrder]);
+  const { data: ordersData, isLoading: isLoadingOrders } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () => backend.order.list()
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
     if (orderNumber.trim()) {
       searchOrder(orderNumber.trim());
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
   const handleOrderClick = (orderNum) => {
     setOrderNumber(orderNum);
     searchOrder(orderNum);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
@@ -23305,12 +23693,13 @@ function CartDrawer({ isOpen, onClose, onCheckout }) {
       {
         className: `fixed top-0 right-0 bottom-0 w-full max-w-md bg-background z-50 shadow-xl transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"}`,
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-full", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between p-4 border-b pt-[env(safe-area-inset-top)]", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-xl font-bold", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between px-4 pb-4 pt-12 border-b bg-background", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "ghost", size: "icon", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-7 w-7" }) }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-2xl font-bold text-center flex-1", children: [
               "Carrinho ",
               items.length > 0 && `(${items.length})`
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "ghost", size: "icon", onClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-6 w-6" }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12 flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: "/logo.png", alt: "Logo", className: "h-10 w-10 object-contain" }) })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto p-4 pb-10", children: items.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-center py-12", children: "Seu carrinho está vazio" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-4", children: [
@@ -23322,16 +23711,38 @@ function CartDrawer({ isOpen, onClose, onCheckout }) {
                   " cada"
                 ] })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Button,
-                {
-                  variant: "ghost",
-                  size: "icon",
-                  onClick: () => removeItem(item.product.id),
-                  className: "shrink-0 h-10 w-10",
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-5 w-5" })
-                }
-              )
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialog, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Button,
+                  {
+                    variant: "ghost",
+                    size: "icon",
+                    className: "shrink-0 h-10 w-10 text-muted-foreground hover:text-destructive",
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-5 w-5" })
+                  }
+                ) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogContent, { className: "w-[90%] rounded-lg", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogHeader, { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogTitle, { children: "Remover item?" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogDescription, { children: [
+                      "Deseja retirar ",
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: item.product.name }),
+                      " do seu carrinho?"
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDialogFooter, { className: "flex-row gap-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDialogCancel, { className: "flex-1 mt-0 border-none", children: "Cancelar" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      AlertDialogAction,
+                      {
+                        onClick: () => removeItem(item.product.id),
+                        className: "flex-1 bg-black text-white font-bold hover:bg-gray-800",
+                        children: "Remover"
+                      }
+                    )
+                  ] })
+                ] })
+              ] })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -23413,55 +23824,685 @@ function BottomNav({ activeTab, onTabChange }) {
     );
   }) }) });
 }
+const scriptRel = "modulepreload";
+const assetsURL = function(dep) {
+  return "/" + dep;
+};
+const seen = {};
+const __vitePreload = function preload(baseModule, deps, importerUrl) {
+  let promise = Promise.resolve();
+  if (deps && deps.length > 0) {
+    let allSettled2 = function(promises) {
+      return Promise.all(
+        promises.map(
+          (p) => Promise.resolve(p).then(
+            (value) => ({ status: "fulfilled", value }),
+            (reason) => ({ status: "rejected", reason })
+          )
+        )
+      );
+    };
+    document.getElementsByTagName("link");
+    const cspNonceMeta = document.querySelector(
+      "meta[property=csp-nonce]"
+    );
+    const cspNonce = (cspNonceMeta == null ? void 0 : cspNonceMeta.nonce) || (cspNonceMeta == null ? void 0 : cspNonceMeta.getAttribute("nonce"));
+    promise = allSettled2(
+      deps.map((dep) => {
+        dep = assetsURL(dep);
+        if (dep in seen) return;
+        seen[dep] = true;
+        const isCss = dep.endsWith(".css");
+        const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+        if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+          return;
+        }
+        const link = document.createElement("link");
+        link.rel = isCss ? "stylesheet" : scriptRel;
+        if (!isCss) {
+          link.as = "script";
+        }
+        link.crossOrigin = "";
+        link.href = dep;
+        if (cspNonce) {
+          link.setAttribute("nonce", cspNonce);
+        }
+        document.head.appendChild(link);
+        if (isCss) {
+          return new Promise((res, rej) => {
+            link.addEventListener("load", res);
+            link.addEventListener(
+              "error",
+              () => rej(new Error(`Unable to preload CSS for ${dep}`))
+            );
+          });
+        }
+      })
+    );
+  }
+  function handlePreloadError(err) {
+    const e = new Event("vite:preloadError", {
+      cancelable: true
+    });
+    e.payload = err;
+    window.dispatchEvent(e);
+    if (!e.defaultPrevented) {
+      throw err;
+    }
+  }
+  return promise.then((res) => {
+    for (const item of res || []) {
+      if (item.status !== "rejected") continue;
+      handlePreloadError(item.reason);
+    }
+    return baseModule().catch(handlePreloadError);
+  });
+};
+/*! Capacitor: https://capacitorjs.com/ - MIT License */
+var ExceptionCode;
+(function(ExceptionCode2) {
+  ExceptionCode2["Unimplemented"] = "UNIMPLEMENTED";
+  ExceptionCode2["Unavailable"] = "UNAVAILABLE";
+})(ExceptionCode || (ExceptionCode = {}));
+class CapacitorException extends Error {
+  constructor(message, code, data) {
+    super(message);
+    this.message = message;
+    this.code = code;
+    this.data = data;
+  }
+}
+const getPlatformId = (win) => {
+  var _a2, _b2;
+  if (win === null || win === void 0 ? void 0 : win.androidBridge) {
+    return "android";
+  } else if ((_b2 = (_a2 = win === null || win === void 0 ? void 0 : win.webkit) === null || _a2 === void 0 ? void 0 : _a2.messageHandlers) === null || _b2 === void 0 ? void 0 : _b2.bridge) {
+    return "ios";
+  } else {
+    return "web";
+  }
+};
+const createCapacitor = (win) => {
+  const capCustomPlatform = win.CapacitorCustomPlatform || null;
+  const cap = win.Capacitor || {};
+  const Plugins = cap.Plugins = cap.Plugins || {};
+  const getPlatform = () => {
+    return capCustomPlatform !== null ? capCustomPlatform.name : getPlatformId(win);
+  };
+  const isNativePlatform = () => getPlatform() !== "web";
+  const isPluginAvailable = (pluginName) => {
+    const plugin = registeredPlugins.get(pluginName);
+    if (plugin === null || plugin === void 0 ? void 0 : plugin.platforms.has(getPlatform())) {
+      return true;
+    }
+    if (getPluginHeader(pluginName)) {
+      return true;
+    }
+    return false;
+  };
+  const getPluginHeader = (pluginName) => {
+    var _a2;
+    return (_a2 = cap.PluginHeaders) === null || _a2 === void 0 ? void 0 : _a2.find((h) => h.name === pluginName);
+  };
+  const handleError = (err) => win.console.error(err);
+  const registeredPlugins = /* @__PURE__ */ new Map();
+  const registerPlugin2 = (pluginName, jsImplementations = {}) => {
+    const registeredPlugin = registeredPlugins.get(pluginName);
+    if (registeredPlugin) {
+      console.warn(`Capacitor plugin "${pluginName}" already registered. Cannot register plugins twice.`);
+      return registeredPlugin.proxy;
+    }
+    const platform = getPlatform();
+    const pluginHeader = getPluginHeader(pluginName);
+    let jsImplementation;
+    const loadPluginImplementation = async () => {
+      if (!jsImplementation && platform in jsImplementations) {
+        jsImplementation = typeof jsImplementations[platform] === "function" ? jsImplementation = await jsImplementations[platform]() : jsImplementation = jsImplementations[platform];
+      } else if (capCustomPlatform !== null && !jsImplementation && "web" in jsImplementations) {
+        jsImplementation = typeof jsImplementations["web"] === "function" ? jsImplementation = await jsImplementations["web"]() : jsImplementation = jsImplementations["web"];
+      }
+      return jsImplementation;
+    };
+    const createPluginMethod = (impl, prop) => {
+      var _a2, _b2;
+      if (pluginHeader) {
+        const methodHeader = pluginHeader === null || pluginHeader === void 0 ? void 0 : pluginHeader.methods.find((m) => prop === m.name);
+        if (methodHeader) {
+          if (methodHeader.rtype === "promise") {
+            return (options) => cap.nativePromise(pluginName, prop.toString(), options);
+          } else {
+            return (options, callback) => cap.nativeCallback(pluginName, prop.toString(), options, callback);
+          }
+        } else if (impl) {
+          return (_a2 = impl[prop]) === null || _a2 === void 0 ? void 0 : _a2.bind(impl);
+        }
+      } else if (impl) {
+        return (_b2 = impl[prop]) === null || _b2 === void 0 ? void 0 : _b2.bind(impl);
+      } else {
+        throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+      }
+    };
+    const createPluginMethodWrapper = (prop) => {
+      let remove;
+      const wrapper = (...args) => {
+        const p = loadPluginImplementation().then((impl) => {
+          const fn = createPluginMethod(impl, prop);
+          if (fn) {
+            const p2 = fn(...args);
+            remove = p2 === null || p2 === void 0 ? void 0 : p2.remove;
+            return p2;
+          } else {
+            throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+          }
+        });
+        if (prop === "addListener") {
+          p.remove = async () => remove();
+        }
+        return p;
+      };
+      wrapper.toString = () => `${prop.toString()}() { [capacitor code] }`;
+      Object.defineProperty(wrapper, "name", {
+        value: prop,
+        writable: false,
+        configurable: false
+      });
+      return wrapper;
+    };
+    const addListener = createPluginMethodWrapper("addListener");
+    const removeListener = createPluginMethodWrapper("removeListener");
+    const addListenerNative = (eventName, callback) => {
+      const call = addListener({ eventName }, callback);
+      const remove = async () => {
+        const callbackId = await call;
+        removeListener({
+          eventName,
+          callbackId
+        }, callback);
+      };
+      const p = new Promise((resolve) => call.then(() => resolve({ remove })));
+      p.remove = async () => {
+        console.warn(`Using addListener() without 'await' is deprecated.`);
+        await remove();
+      };
+      return p;
+    };
+    const proxy = new Proxy({}, {
+      get(_, prop) {
+        switch (prop) {
+          // https://github.com/facebook/react/issues/20030
+          case "$$typeof":
+            return void 0;
+          case "toJSON":
+            return () => ({});
+          case "addListener":
+            return pluginHeader ? addListenerNative : addListener;
+          case "removeListener":
+            return removeListener;
+          default:
+            return createPluginMethodWrapper(prop);
+        }
+      }
+    });
+    Plugins[pluginName] = proxy;
+    registeredPlugins.set(pluginName, {
+      name: pluginName,
+      proxy,
+      platforms: /* @__PURE__ */ new Set([...Object.keys(jsImplementations), ...pluginHeader ? [platform] : []])
+    });
+    return proxy;
+  };
+  if (!cap.convertFileSrc) {
+    cap.convertFileSrc = (filePath) => filePath;
+  }
+  cap.getPlatform = getPlatform;
+  cap.handleError = handleError;
+  cap.isNativePlatform = isNativePlatform;
+  cap.isPluginAvailable = isPluginAvailable;
+  cap.registerPlugin = registerPlugin2;
+  cap.Exception = CapacitorException;
+  cap.DEBUG = !!cap.DEBUG;
+  cap.isLoggingEnabled = !!cap.isLoggingEnabled;
+  return cap;
+};
+const initCapacitorGlobal = (win) => win.Capacitor = createCapacitor(win);
+const Capacitor = /* @__PURE__ */ initCapacitorGlobal(typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
+const registerPlugin = Capacitor.registerPlugin;
+class WebPlugin {
+  constructor() {
+    this.listeners = {};
+    this.retainedEventArguments = {};
+    this.windowListeners = {};
+  }
+  addListener(eventName, listenerFunc) {
+    let firstListener = false;
+    const listeners2 = this.listeners[eventName];
+    if (!listeners2) {
+      this.listeners[eventName] = [];
+      firstListener = true;
+    }
+    this.listeners[eventName].push(listenerFunc);
+    const windowListener = this.windowListeners[eventName];
+    if (windowListener && !windowListener.registered) {
+      this.addWindowListener(windowListener);
+    }
+    if (firstListener) {
+      this.sendRetainedArgumentsForEvent(eventName);
+    }
+    const remove = async () => this.removeListener(eventName, listenerFunc);
+    const p = Promise.resolve({ remove });
+    return p;
+  }
+  async removeAllListeners() {
+    this.listeners = {};
+    for (const listener in this.windowListeners) {
+      this.removeWindowListener(this.windowListeners[listener]);
+    }
+    this.windowListeners = {};
+  }
+  notifyListeners(eventName, data, retainUntilConsumed) {
+    const listeners2 = this.listeners[eventName];
+    if (!listeners2) {
+      if (retainUntilConsumed) {
+        let args = this.retainedEventArguments[eventName];
+        if (!args) {
+          args = [];
+        }
+        args.push(data);
+        this.retainedEventArguments[eventName] = args;
+      }
+      return;
+    }
+    listeners2.forEach((listener) => listener(data));
+  }
+  hasListeners(eventName) {
+    var _a2;
+    return !!((_a2 = this.listeners[eventName]) === null || _a2 === void 0 ? void 0 : _a2.length);
+  }
+  registerWindowListener(windowEventName, pluginEventName) {
+    this.windowListeners[pluginEventName] = {
+      registered: false,
+      windowEventName,
+      pluginEventName,
+      handler: (event) => {
+        this.notifyListeners(pluginEventName, event);
+      }
+    };
+  }
+  unimplemented(msg = "not implemented") {
+    return new Capacitor.Exception(msg, ExceptionCode.Unimplemented);
+  }
+  unavailable(msg = "not available") {
+    return new Capacitor.Exception(msg, ExceptionCode.Unavailable);
+  }
+  async removeListener(eventName, listenerFunc) {
+    const listeners2 = this.listeners[eventName];
+    if (!listeners2) {
+      return;
+    }
+    const index = listeners2.indexOf(listenerFunc);
+    this.listeners[eventName].splice(index, 1);
+    if (!this.listeners[eventName].length) {
+      this.removeWindowListener(this.windowListeners[eventName]);
+    }
+  }
+  addWindowListener(handle) {
+    window.addEventListener(handle.windowEventName, handle.handler);
+    handle.registered = true;
+  }
+  removeWindowListener(handle) {
+    if (!handle) {
+      return;
+    }
+    window.removeEventListener(handle.windowEventName, handle.handler);
+    handle.registered = false;
+  }
+  sendRetainedArgumentsForEvent(eventName) {
+    const args = this.retainedEventArguments[eventName];
+    if (!args) {
+      return;
+    }
+    delete this.retainedEventArguments[eventName];
+    args.forEach((arg) => {
+      this.notifyListeners(eventName, arg);
+    });
+  }
+}
+const encode = (str) => encodeURIComponent(str).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+const decode = (str) => str.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+class CapacitorCookiesPluginWeb extends WebPlugin {
+  async getCookies() {
+    const cookies = document.cookie;
+    const cookieMap = {};
+    cookies.split(";").forEach((cookie) => {
+      if (cookie.length <= 0)
+        return;
+      let [key, value] = cookie.replace(/=/, "CAP_COOKIE").split("CAP_COOKIE");
+      key = decode(key).trim();
+      value = decode(value).trim();
+      cookieMap[key] = value;
+    });
+    return cookieMap;
+  }
+  async setCookie(options) {
+    try {
+      const encodedKey = encode(options.key);
+      const encodedValue = encode(options.value);
+      const expires = `; expires=${(options.expires || "").replace("expires=", "")}`;
+      const path = (options.path || "/").replace("path=", "");
+      const domain = options.url != null && options.url.length > 0 ? `domain=${options.url}` : "";
+      document.cookie = `${encodedKey}=${encodedValue || ""}${expires}; path=${path}; ${domain};`;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async deleteCookie(options) {
+    try {
+      document.cookie = `${options.key}=; Max-Age=0`;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async clearCookies() {
+    try {
+      const cookies = document.cookie.split(";") || [];
+      for (const cookie of cookies) {
+        document.cookie = cookie.replace(/^ +/, "").replace(/=.*/, `=;expires=${(/* @__PURE__ */ new Date()).toUTCString()};path=/`);
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async clearAllCookies() {
+    try {
+      await this.clearCookies();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+}
+registerPlugin("CapacitorCookies", {
+  web: () => new CapacitorCookiesPluginWeb()
+});
+const readBlobAsBase64 = async (blob) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const base64String = reader.result;
+    resolve(base64String.indexOf(",") >= 0 ? base64String.split(",")[1] : base64String);
+  };
+  reader.onerror = (error) => reject(error);
+  reader.readAsDataURL(blob);
+});
+const normalizeHttpHeaders = (headers = {}) => {
+  const originalKeys = Object.keys(headers);
+  const loweredKeys = Object.keys(headers).map((k) => k.toLocaleLowerCase());
+  const normalized = loweredKeys.reduce((acc, key, index) => {
+    acc[key] = headers[originalKeys[index]];
+    return acc;
+  }, {});
+  return normalized;
+};
+const buildUrlParams = (params, shouldEncode = true) => {
+  if (!params)
+    return null;
+  const output = Object.entries(params).reduce((accumulator, entry) => {
+    const [key, value] = entry;
+    let encodedValue;
+    let item;
+    if (Array.isArray(value)) {
+      item = "";
+      value.forEach((str) => {
+        encodedValue = shouldEncode ? encodeURIComponent(str) : str;
+        item += `${key}=${encodedValue}&`;
+      });
+      item.slice(0, -1);
+    } else {
+      encodedValue = shouldEncode ? encodeURIComponent(value) : value;
+      item = `${key}=${encodedValue}`;
+    }
+    return `${accumulator}&${item}`;
+  }, "");
+  return output.substr(1);
+};
+const buildRequestInit = (options, extra = {}) => {
+  const output = Object.assign({ method: options.method || "GET", headers: options.headers }, extra);
+  const headers = normalizeHttpHeaders(options.headers);
+  const type = headers["content-type"] || "";
+  if (typeof options.data === "string") {
+    output.body = options.data;
+  } else if (type.includes("application/x-www-form-urlencoded")) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(options.data || {})) {
+      params.set(key, value);
+    }
+    output.body = params.toString();
+  } else if (type.includes("multipart/form-data") || options.data instanceof FormData) {
+    const form = new FormData();
+    if (options.data instanceof FormData) {
+      options.data.forEach((value, key) => {
+        form.append(key, value);
+      });
+    } else {
+      for (const key of Object.keys(options.data)) {
+        form.append(key, options.data[key]);
+      }
+    }
+    output.body = form;
+    const headers2 = new Headers(output.headers);
+    headers2.delete("content-type");
+    output.headers = headers2;
+  } else if (type.includes("application/json") || typeof options.data === "object") {
+    output.body = JSON.stringify(options.data);
+  }
+  return output;
+};
+class CapacitorHttpPluginWeb extends WebPlugin {
+  /**
+   * Perform an Http request given a set of options
+   * @param options Options to build the HTTP request
+   */
+  async request(options) {
+    const requestInit = buildRequestInit(options, options.webFetchExtra);
+    const urlParams = buildUrlParams(options.params, options.shouldEncodeUrlParams);
+    const url = urlParams ? `${options.url}?${urlParams}` : options.url;
+    const response = await fetch(url, requestInit);
+    const contentType = response.headers.get("content-type") || "";
+    let { responseType = "text" } = response.ok ? options : {};
+    if (contentType.includes("application/json")) {
+      responseType = "json";
+    }
+    let data;
+    let blob;
+    switch (responseType) {
+      case "arraybuffer":
+      case "blob":
+        blob = await response.blob();
+        data = await readBlobAsBase64(blob);
+        break;
+      case "json":
+        data = await response.json();
+        break;
+      case "document":
+      case "text":
+      default:
+        data = await response.text();
+    }
+    const headers = {};
+    response.headers.forEach((value, key) => {
+      headers[key] = value;
+    });
+    return {
+      data,
+      headers,
+      status: response.status,
+      url: response.url
+    };
+  }
+  /**
+   * Perform an Http GET request given a set of options
+   * @param options Options to build the HTTP request
+   */
+  async get(options) {
+    return this.request(Object.assign(Object.assign({}, options), { method: "GET" }));
+  }
+  /**
+   * Perform an Http POST request given a set of options
+   * @param options Options to build the HTTP request
+   */
+  async post(options) {
+    return this.request(Object.assign(Object.assign({}, options), { method: "POST" }));
+  }
+  /**
+   * Perform an Http PUT request given a set of options
+   * @param options Options to build the HTTP request
+   */
+  async put(options) {
+    return this.request(Object.assign(Object.assign({}, options), { method: "PUT" }));
+  }
+  /**
+   * Perform an Http PATCH request given a set of options
+   * @param options Options to build the HTTP request
+   */
+  async patch(options) {
+    return this.request(Object.assign(Object.assign({}, options), { method: "PATCH" }));
+  }
+  /**
+   * Perform an Http DELETE request given a set of options
+   * @param options Options to build the HTTP request
+   */
+  async delete(options) {
+    return this.request(Object.assign(Object.assign({}, options), { method: "DELETE" }));
+  }
+}
+registerPlugin("CapacitorHttp", {
+  web: () => new CapacitorHttpPluginWeb()
+});
+var SystemBarsStyle;
+(function(SystemBarsStyle2) {
+  SystemBarsStyle2["Dark"] = "DARK";
+  SystemBarsStyle2["Light"] = "LIGHT";
+  SystemBarsStyle2["Default"] = "DEFAULT";
+})(SystemBarsStyle || (SystemBarsStyle = {}));
+var SystemBarType;
+(function(SystemBarType2) {
+  SystemBarType2["StatusBar"] = "StatusBar";
+  SystemBarType2["NavigationBar"] = "NavigationBar";
+})(SystemBarType || (SystemBarType = {}));
+class SystemBarsPluginWeb extends WebPlugin {
+  async setStyle() {
+    this.unavailable("not available for web");
+  }
+  async setAnimation() {
+    this.unavailable("not available for web");
+  }
+  async show() {
+    this.unavailable("not available for web");
+  }
+  async hide() {
+    this.unavailable("not available for web");
+  }
+}
+registerPlugin("SystemBars", {
+  web: () => new SystemBarsPluginWeb()
+});
+const App$1 = registerPlugin("App", {
+  web: () => __vitePreload(() => import("./web-BdZKQjf-.js"), true ? [] : void 0).then((m) => new m.AppWeb())
+});
 function AppInner() {
   const [activeTab, setActiveTab] = reactExports.useState("shop");
+  const { toast: toast2 } = useToast();
+  const [searchQuery, setSearchQuery] = reactExports.useState("");
   const [showCheckout, setShowCheckout] = reactExports.useState(false);
   const [cartOpen, setCartOpen] = reactExports.useState(false);
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  reactExports.useEffect(() => {
+    let backPressCount = 0;
+    const backHandler = App$1.addListener("backButton", ({ canGoBack }) => {
+      if (showCheckout) {
+        setShowCheckout(false);
+        setCartOpen(true);
+      } else if (cartOpen) {
+        setCartOpen(false);
+      } else if (activeTab !== "shop") {
+        handleTabChange("shop");
+      } else {
+        if (backPressCount === 0) {
+          backPressCount++;
+          toast2({
+            description: "Pressione voltar novamente para sair",
+            duration: 2e3
+          });
+          setTimeout(() => {
+            backPressCount = 0;
+          }, 2e3);
+        } else {
+          App$1.exitApp();
+        }
+      }
+    });
+    return () => {
+      backHandler.then((h) => h.remove());
+    };
+  }, [activeTab, showCheckout, cartOpen]);
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     setShowCheckout(false);
+    if (tab !== "track") {
+      setSearchQuery("");
+    }
   };
   return (
     // Adicionamos pb-safe para o conteúdo não ficar atrás do BottomNav
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-background pb-[calc(6rem+env(safe-area-inset-bottom))]", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "border-b sticky top-0 bg-background z-10 pt-[env(safe-area-inset-top)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-        showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button,
-          {
-            variant: "ghost",
-            size: "icon",
-            onClick: () => setShowCheckout(false),
-            className: "h-10 w-10",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { className: "h-6 w-6" })
-          }
-        ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Package, { className: "h-6 w-6" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold", children: "Loja Tidata" })
+      !showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx("header", { className: "border-b sticky top-0 bg-background z-10 pt-[env(safe-area-inset-top)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "img",
+            {
+              src: "/logo.png",
+              alt: "Logo Tidata",
+              className: "h-12 w-12 object-contain"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-extrabold tracking-tight", children: "Loja Tidata" })
         ] }),
-        activeTab === "shop" && !showCheckout && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        activeTab === "shop" && /* @__PURE__ */ jsxRuntimeExports.jsxs(
           Button,
           {
             variant: "ghost",
             size: "icon",
             onClick: () => setCartOpen(true),
-            className: "relative h-10 w-10",
+            className: "relative h-12 w-12",
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ShoppingCart, { className: "h-6 w-6" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ShoppingCart, { className: "h-8 w-8" }),
               itemCount > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Badge,
                 {
                   variant: "destructive",
-                  className: "absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 text-xs",
+                  className: "absolute -top-2 -right-2 h-6 min-w-6 flex items-center justify-center p-0 text-[10px] rounded-full",
                   children: itemCount
                 }
               )
             ]
           }
         )
-      ] }) }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "px-4 pt-2", children: activeTab === "shop" ? showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(Checkout, { onComplete: () => setShowCheckout(false) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ProductList, {}) : activeTab === "track" ? /* @__PURE__ */ jsxRuntimeExports.jsx(OrderSearch, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(AdminPanel, {}) }),
+      ] }) }) }) : null,
+      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: showCheckout ? "flex-1" : "px-4 pt-2", children: activeTab === "shop" ? showCheckout ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Checkout,
+        {
+          onComplete: () => setShowCheckout(false),
+          onBack: () => {
+            setShowCheckout(false);
+            setCartOpen(true);
+          }
+        }
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsx(ProductList, {}) : activeTab === "track" ? /* @__PURE__ */ jsxRuntimeExports.jsx(OrderSearch, { searchQuery }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+        AdminPanel,
+        {
+          setActiveTab: handleTabChange,
+          setSearchQuery
+        }
+      ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BottomNav, { activeTab, onTabChange: handleTabChange }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         CartDrawer,
@@ -23498,3 +24539,6 @@ function App() {
 ReactDOM$1.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
 );
+export {
+  WebPlugin as W
+};
