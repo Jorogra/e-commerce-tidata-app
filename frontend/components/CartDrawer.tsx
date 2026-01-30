@@ -2,6 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { useCart } from "../lib/cart-context";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -53,14 +64,36 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                           R$ {item.product.price.toFixed(2)} cada
                         </p>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => removeItem(item.product.id)}
-                        className="shrink-0 h-10 w-10"
-                      >
-                        <Trash2 className="h-5 w-5" />
-                      </Button>
+                      <AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="shrink-0 h-10 w-10 text-muted-foreground hover:text-destructive"
+    >
+      <Trash2 className="h-5 w-5" />
+    </Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent className="w-[90%] rounded-lg">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Remover item?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Deseja retirar <strong>{item.product.name}</strong> do seu carrinho?
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter className="flex-row gap-2">
+      <AlertDialogCancel className="flex-1 mt-0 border-none">
+        Cancelar
+      </AlertDialogCancel>
+      <AlertDialogAction
+        onClick={() => removeItem(item.product.id)}
+        className="flex-1 bg-black text-white font-bold hover:bg-gray-800"
+      >
+        Remover
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
                     </div>
                     <div className="flex items-center gap-3">
                       <Button

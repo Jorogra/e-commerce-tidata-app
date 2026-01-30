@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProductList } from "./ProductList";
 import { Checkout } from "./Checkout";
 import { AdminPanel } from "./AdminPanel";
@@ -9,13 +9,52 @@ import { ShoppingCart, Package, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "../lib/cart-context";
+import { useToast } from "@/components/ui/use-toast";
+import { App as CapApp } from '@capacitor/app';
 
 export function AppInner() {
   const [activeTab, setActiveTab] = useState<"shop" | "track" | "admin">("shop");
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState("");
   const [showCheckout, setShowCheckout] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  useEffect(() => {
+  let backPressCount = 0;
+
+  const backHandler = CapApp.addListener('backButton', ({ canGoBack }) => {
+    // 1. Se estivermos no Checkout, voltamos para a Loja
+    if (showCheckout) {
+      setShowCheckout(false);
+    } 
+    // 2. Se estivermos em Admin ou Pesquisa (track), voltamos para a Loja
+    else if (activeTab !== "shop") {
+      handleTabChange("shop");
+    } 
+    // 3. Se já estivermos na Loja (tela inicial)
+    else {
+      if (backPressCount === 0) {
+        backPressCount++;
+        // Exibe um alerta rápido (Toast)
+        toast({
+          description: "Pressione voltar novamente para sair",
+          duration: 2000,
+        });
+        // Reseta o contador após 2 segundos
+        setTimeout(() => { backPressCount = 0; }, 2000);
+      } else {
+        // Se clicar pela segunda vez em menos de 2s, o app fecha
+        CapApp.exitApp();
+      }
+    }
+  });
+
+  return () => {
+    backHandler.then(h => h.remove());
+  };
+}, [activeTab, showCheckout]); // Ele monitora a aba e se o checkout está aberto
 
   const handleTabChange = (tab: "shop" | "track" | "admin") => {
     setActiveTab(tab);
@@ -77,7 +116,10 @@ return (
         ) : activeTab === "track" ? (
           <OrderSearch />
         ) : (
-          <AdminPanel />
+          <AdminPanel 
+  setActiveTab={handleTabChange} 
+  setSearchQuery={setSearchQuery} // Certifique-se de que setSearchQuery existe aqui no pai também
+/>
         )}
       </main>
 

@@ -8,14 +8,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Loader2, Plus, Pencil, Trash2, Package } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Package, Search } from "lucide-react"
 import type { Product } from "~backend/product/create";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-export function AdminPanel() {
+interface AdminPanelProps {
+  setActiveTab: (tab: "shop" | "track" | "admin") => void;
+  setSearchQuery: (query: string) => void;
+}
+
+export function AdminPanel({ setActiveTab, setSearchQuery }: AdminPanelProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [countdown, setCountdown] = useState(0);
+  const [expandedOrder, setExpandedOrder] = useState<string | number | null>(null);
 
   const { data: productsData, isLoading: isLoadingProducts } = useQuery({
     queryKey: ["products"],
@@ -209,35 +227,68 @@ export function AdminPanel() {
             
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
               <span className="font-bold text-sm">R$ {product.price.toFixed(2)}</span>
-              <span className={`text-[10px] font-bold uppercase ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
-                Est: {product.stockQuantity}
+              <span className={`text-[15px] font-bold uppercase ${product.stockQuantity <= 5 ? 'text-red-600' : 'text-muted-foreground'}`}>
+                Qtd: {product.stockQuantity}
               </span>
             </div>
           </div>
 
           {/* Botões fixos no canto direito que não encolhem */}
-          <div className="flex gap-1 shrink-0 ml-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() => {
-                setEditingProduct(product);
-                setIsDialogOpen(true);
-              }}
-            >
-              <Pencil className="h-3.5 w-3.5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8 text-destructive"
-              onClick={() => deleteMutation.mutate(product.id)}
-              disabled={deleteMutation.isPending}
-            >
-              <Trash2 className="h-3.5 w-3.5" />
-            </Button>
-          </div>
+<div className="flex gap-1 shrink-0 ml-2">
+  <Button
+    variant="outline"
+    size="icon"
+    className="h-8 w-8"
+    onClick={() => {
+      setEditingProduct(product);
+      setIsDialogOpen(true);
+    }}
+  >
+    <Pencil className="h-3.5 w-3.5" />
+  </Button>
+
+  {/* Início do Alerta de Confirmação para Deletar */}
+  <AlertDialog onOpenChange={(open: boolean) => {
+  if (open) {
+    setCountdown(3); // Começa em 3 segundos ao abrir
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }
+}}>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline" size="icon" className="h-8 w-8 text-destructive">
+      <Trash2 className="h-3.5 w-3.5" />
+    </Button>
+  </AlertDialogTrigger>
+  
+  <AlertDialogContent className="w-[90%] rounded-lg">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Excluir produto?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Tem certeza que deseja remover <strong>{product.name}</strong>?
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    
+    <AlertDialogFooter className="flex-col gap-2 sm:flex-row">
+      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+      <AlertDialogAction
+        disabled={countdown > 0 || deleteMutation.isPending}
+        onClick={() => deleteMutation.mutate(product.id)}
+        className="bg-red-600 text-white font-bold hover:bg-red-700 disabled:opacity-50"
+      >
+        {countdown > 0 ? `Aguarde (${countdown}s)` : "EXCLUIR"}
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+</div>
         </div>
       </CardContent>
     </Card>
@@ -247,12 +298,19 @@ export function AdminPanel() {
 
       <div>
   <h2 className="text-3xl font-bold mb-6">Pedidos recentes</h2>
-  <div className="grid gap-4 w-full"> {/* Adicionado w-full */}
-    {ordersData?.orders.map((order) => (
-      <Card key={order.id} className="overflow-hidden"> {/* Adicionado overflow-hidden */}
-        <CardHeader className="p-4"> {/* Ajustado padding para mobile */}
-          <div className="flex items-center justify-between gap-2"> {/* Gap para evitar colisão */}
-            <div className="min-w-0 flex-1"> {/* Segredo do truncamento */}
+<div className="grid gap-4 w-full">
+  {ordersData?.orders.map((order) => {
+    const isExpanded = expandedOrder === order.id; // Verifica se este card está aberto
+    
+    return (
+      <Card 
+        key={order.id} 
+        className="overflow-hidden cursor-pointer transition-all duration-300 active:scale-[0.98]"
+        onClick={() => setExpandedOrder(isExpanded ? null : order.id)}
+      >
+        <CardHeader className="p-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0 flex-1">
               <CardTitle className="text-base truncate">{order.orderNumber}</CardTitle>
               <p className="text-xs text-muted-foreground mt-1 truncate">
                 {order.customerName}
@@ -261,7 +319,7 @@ export function AdminPanel() {
                 {order.customerEmail}
               </p>
             </div>
-            <div className="text-right shrink-0"> {/* Impede o preço de espremer */}
+            <div className="text-right shrink-0">
               <p className="font-bold text-base">R$ {order.total.toFixed(2)}</p>
               <p className="text-[10px] text-muted-foreground">
                 {new Date(order.createdAt).toLocaleDateString()}
@@ -269,9 +327,33 @@ export function AdminPanel() {
             </div>
           </div>
         </CardHeader>
+
+        {/* Conteúdo Expansível */}
+        <div 
+          className={`transition-all duration-300 ease-in-out ${
+            isExpanded ? "max-h-40 opacity-100 p-4 pt-0" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="border-t pt-3 flex flex-col gap-2">
+            <Button 
+              size="sm" 
+              variant="secondary"
+              className="w-full text-xs font-semibold flex gap-2"
+              onClick={(e) => {
+                e.stopPropagation(); // Evita fechar o card ao clicar no botão
+                setActiveTab("track"); // Muda para a aba de pesquisa
+                setSearchQuery(order.orderNumber); // Preenche a busca com o número do pedido
+              }}
+            >
+              <Search className="h-3 w-3" />
+              PESQUISAR ESSE PEDIDO
+            </Button>
+          </div>
+        </div>
       </Card>
-    ))}
-  </div>
+    );
+  })}
+</div>
 </div>
     </div>
   );

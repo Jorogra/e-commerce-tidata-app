@@ -3,6 +3,17 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Plus, Minus, Trash2 } from "lucide-react";
 import { useCart } from "../lib/cart-context";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface CartProps {
   onCheckout: () => void;
@@ -49,14 +60,34 @@ export function Cart({ onCheckout }: CartProps) {
                   R$ {item.product.price.toFixed(2)} cada
                 </p>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => removeItem(item.product.id)}
-                className="shrink-0"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              <AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="shrink-0 text-muted-foreground hover:text-destructive"
+    >
+      <Trash2 className="h-4 w-4" />
+    </Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent className="w-[90%] rounded-lg">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Remover item?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Deseja retirar <strong>{item.product.name}</strong> do seu carrinho?
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+      <AlertDialogAction
+        onClick={() => removeItem(item.product.id)}
+        className="bg-black text-white font-bold hover:bg-gray-800 border-none"
+      >
+        Remover
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
             </div>
             <div className="flex items-center gap-2">
               <Button
