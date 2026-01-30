@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "packageManager": "bun",
+  "scripts": {},
+  "dependencies": {
+    "encore.dev": "^1.53.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
